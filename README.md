@@ -43,3 +43,10 @@
 
    In the logs you should see the service checking the server's health on a
    regular interval. The interval was configured in `rds.service`.
+
+   To verify that the setup works, you may kill the game server and see how
+   the _systemd_ setup detects it not being healthy and then restarts it:
+
+   ```bash
+   kill $(pgrep RustDedicated)
+   ```
