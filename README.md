@@ -17,7 +17,7 @@
    useradd -m rust
    ```
 
-4. Put the dir `scripts/` in `home/rust/`. The _systemd_ managed service
+4. Put the dir `scripts/` in `/home/rust/`. The _systemd_ managed service
    expects that.
 
 5. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
