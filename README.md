@@ -35,8 +35,11 @@
    systemctl start rds.service
    ```
 
-7. Follow the service's logs
+7. Follow the service's logs.
 
    ```bash
    journalctl -fu rds.service
    ```
+
+   In the logs you should see the service checking the server's health on a
+   regular interval. The interval was configured in `rds.service`.
