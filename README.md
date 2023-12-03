@@ -102,7 +102,7 @@ The script that starts _RustDedicated_ ([start.sh](./scripts/start.sh)) may
 define a log file for it (e.g. `rds.log`). Observe that file if it seems no
 stdout is emitted from the process.
 
-Carbon emits its logs to `carbon/logs`.
+Carbon emits its logs to `carbon/logs/`.
 
 ### Verifying the _systemd_ setup
 
