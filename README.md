@@ -1,9 +1,11 @@
 # Usage
 
 Tested on 3 Dec 2023 on:
+
 ```
 Debian GNU/Linux 12 (bookworm)
 Steam Console Client (c) Valve Corporation - version 1701290101
+Carbon v1.2023.4314.0758
 ```
 
 1. Create user `rust` with home `/home/rust/`. The _systemd_ managed service
@@ -44,7 +46,20 @@ Steam Console Client (c) Valve Corporation - version 1701290101
 5. Put the dir `scripts/` in `/home/rust/`. The _systemd_ managed service
    expects that.
 
-6. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
+6. Install [Carbon](https://carbonmod.gg/) (modding framework). As of 3 Dec 2023
+   it's distributed via GitHub releases so that you may extract it to the
+   _RustDedicated_ installation directory:
+
+   ```
+   cd ~/.local/share/Steam/steamapps/common/rust_dedicated/
+   wget https://github.com/CarbonCommunity/Carbon/releases/download/production_build/Carbon.Linux.Minimal.tar.gz
+   tar -xzf Carbon.Linux.Minimal.tar.gz
+   ```
+
+   The Carbon installation is enabled in [start.sh](./scripts/start.sh) by
+   sourcing its included `environment.sh`.
+
+7. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
    _systemd_ managed service. Then reload the _systemctl_ daemon with the new
    config:
 
@@ -52,14 +67,14 @@ Steam Console Client (c) Valve Corporation - version 1701290101
    systemctl daemon-reload
    ```
 
-7. Enable and start the _systemd_ managed service.
+8. Enable and start the _systemd_ managed service.
 
    ```
    systemctl enable rds.service
    systemctl start rds.service
    ```
 
-8. Follow the service's logs.
+9. Follow the service's logs.
 
    ```
    journalctl -fu rds.service
