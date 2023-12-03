@@ -56,8 +56,11 @@ Carbon v1.2023.4314.0758
    tar -xzf Carbon.Linux.Minimal.tar.gz
    ```
 
+   This will create a `carbon/` directory in the _RustDedicated_ installation
+   directory.
+
    The Carbon installation is enabled in [start.sh](./scripts/start.sh) by
-   sourcing its included `environment.sh`.
+   sourcing the Carbon included `environment.sh`.
 
 7. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
    _systemd_ managed service. Then reload the _systemctl_ daemon with the new
@@ -97,8 +100,10 @@ Watch some process' stdout:
    ```
 
 The script that starts _RustDedicated_ ([start.sh](./scripts/start.sh)) may
-define a log file (e.g. `rds.log`). Observe that file if it seems no stdout is
-emitted.
+define a log file for it (e.g. `rds.log`). Observe that file if it seems no
+stdout is emitted from the process.
+
+Carbon emits its logs to `carbon/logs`.
 
 ### Verifying the _systemd_ setup
 
