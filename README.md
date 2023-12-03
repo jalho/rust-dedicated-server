@@ -63,8 +63,7 @@ Carbon v1.2023.4314.0758
    sourcing the Carbon included `environment.sh`.
 
 7. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
-   _systemd_ managed service. Then reload the _systemctl_ daemon with the new
-   config:
+   _systemd_ managed service. Then reload the daemon with the new config:
 
    ```
    systemctl daemon-reload
