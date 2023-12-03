@@ -1,4 +1,4 @@
-# Usage
+## Usage
 
 Tested on 3 Dec 2023 on:
 
@@ -74,20 +74,37 @@ Carbon v1.2023.4314.0758
    systemctl start rds.service
    ```
 
-9. Follow the service's logs.
+## Tips
+
+### Observing logs
+
+See the _systemd_ managed service's logs:
 
    ```
    journalctl -fu rds.service
    ```
 
-   or alternatively watch e.g. process stdout:
+   or
+
+   ```
+   journalctl -xeu rds.service
+   ```
+
+Watch some process' stdout:
 
    ```
    watch -n 1 "tail /proc/$(pgrep RustDedicated)/fd/1"
    ```
 
-   To verify that the setup works, you may kill the game server and see how
-   the _systemd_ setup detects it not being healthy and then restarts it:
+The script that starts _RustDedicated_ ([start.sh](./scripts/start.sh)) may
+define a log file (e.g. `rds.log`). Observe that file if it seems no stdout is
+emitted.
+
+### Verifying the _systemd_ setup
+
+To verify that the _systemd_ setup works, you may kill the game server and see
+how it gets updated and restarted (or whatever else is defined in scripts
+referred to in [rds.service](./rds.service)):
 
    ```
    kill $(pgrep RustDedicated)
