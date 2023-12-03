@@ -1,20 +1,28 @@
 # Usage
 
+Tested on 3 Dec 2023 on:
+```
+Debian GNU/Linux 12 (bookworm).
+Steam Console Client (c) Valve Corporation - version 1701290101
+```
+
 1. Create user `rust` with home `/home/rust/`. The _systemd_ managed service
    expects that.
 
-   ```bash
+   ```
    useradd -m rust
    ```
 
-2. Install [_SteamCMD_](https://developer.valvesoftware.com/wiki/SteamCMD). It is
-   used to install _RustDedicated_.
+2. Install [_SteamCMD_](https://developer.valvesoftware.com/wiki/SteamCMD).
+   It is used to install _RustDedicated_.
 
-3. Using _SteamCMD_, install _RustDedicated_. In later steps we'll configure
-   it to be run using _systemd_.
+3. Using _SteamCMD_, install _RustDedicated_ for the user `rust` created earlier.
+   In later steps we'll configure _systemd_ to run it.
 
-   ```bash
-   steamcmd +login anonymous +app_update 258550 validate +quit
+   ```
+   su rust
+   cd
+   /usr/games/steamcmd +login anonymous +app_update 258550 validate +quit
    ```
 
    As of 3 Dec 2023, the _RustDedicated_ installation goes to
