@@ -2,7 +2,7 @@
 
 Tested on 3 Dec 2023 on:
 ```
-Debian GNU/Linux 12 (bookworm).
+Debian GNU/Linux 12 (bookworm)
 Steam Console Client (c) Valve Corporation - version 1701290101
 ```
 
@@ -48,29 +48,32 @@ Steam Console Client (c) Valve Corporation - version 1701290101
    _systemd_ managed service. Then reload the _systemctl_ daemon with the new
    config:
 
-   ```bash
+   ```
    systemctl daemon-reload
    ```
 
 7. Enable and start the _systemd_ managed service.
 
-   ```bash
+   ```
    systemctl enable rds.service
    systemctl start rds.service
    ```
 
 8. Follow the service's logs.
 
-   ```bash
+   ```
    journalctl -fu rds.service
    ```
 
-   In the logs you should see the service checking the server's health on a
-   regular interval. The interval was configured in `rds.service`.
+   or alternatively watch e.g. process stdout:
+
+   ```
+   watch -n 1 "tail /proc/$(pgrep RustDedicated)/fd/1"
+   ```
 
    To verify that the setup works, you may kill the game server and see how
    the _systemd_ setup detects it not being healthy and then restarts it:
 
-   ```bash
+   ```
    kill $(pgrep RustDedicated)
    ```
