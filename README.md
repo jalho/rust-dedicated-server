@@ -41,15 +41,10 @@ Steam Console Client (c) Valve Corporation - version 1701290101
 
    Examples for `server.cfg` and `users.cfg` are provided in this repository.
 
-5. Edit the server start script named `runds.sh` that comes with the _RustDedicated_
-   installation (in the installation directory). Append to parameters:
-   `+server.identity "instance0"`. Once run, this should make the server load
-   the instance specific configuration created earlier.
-
-6. Put the dir `scripts/` in `/home/rust/`. The _systemd_ managed service
+5. Put the dir `scripts/` in `/home/rust/`. The _systemd_ managed service
    expects that.
 
-7. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
+6. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
    _systemd_ managed service. Then reload the _systemctl_ daemon with the new
    config:
 
@@ -57,14 +52,14 @@ Steam Console Client (c) Valve Corporation - version 1701290101
    systemctl daemon-reload
    ```
 
-8. Enable and start the _systemd_ managed service.
+7. Enable and start the _systemd_ managed service.
 
    ```bash
    systemctl enable rds.service
    systemctl start rds.service
    ```
 
-9. Follow the service's logs.
+8. Follow the service's logs.
 
    ```bash
    journalctl -fu rds.service
