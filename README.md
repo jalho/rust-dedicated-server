@@ -52,7 +52,7 @@ Carbon v1.2023.4314.0758
 
    ```
    cd ~/.local/share/Steam/steamapps/common/rust_dedicated/
-   wget https://github.com/CarbonCommunity/Carbon/releases/download/production_build/Carbon.Linux.Minimal.tar.gz
+   wget https://github.com/CarbonCommunity/Carbon/releases/download/production_build/Carbon.Linux.Release.tar.gz
    tar -xzf Carbon.Linux.Minimal.tar.gz
    ```
 
