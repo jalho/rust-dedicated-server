@@ -8,7 +8,7 @@ WorkingDirectory=/home/rust/.local/share/Steam/steamapps/common/rust_dedicated
 ExecStart=bash /home/rust/.local/share/Steam/steamapps/common/rust_dedicated/runds.sh
 Restart=always
 RestartSec=3
-ExecStartPre=bash /home/rust/scripts/start.sh
+ExecStartPre=bash /home/rust/scripts/prestart.sh
 
 [Install]
 WantedBy=default.target
