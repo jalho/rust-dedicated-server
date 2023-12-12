@@ -32,15 +32,8 @@ Carbon v1.2023.4314.0758
    Once the script has completed running, _RustDedicated_ should be installed in `/home/rust/Steam/steamapps/common/rust_dedicated/`. This is how it worked 12 Dec 2023. If not, update [\_constants.sh](./scripts/_constants.sh) accordingly.
 
 4. Configure the game server by placing `server.cfg` and `users.cfg` in path
-   `./server/instance0/cfg/` (relative to the _RustDedicated_ installation
-   directory). `instance0` refers to a Rust internal identity which should match
-   the identity parameter given to the `RustDedicated` executable when it's run.
-
-   ```
-   $ whoami
-   rust
-   $ mkdir -p ~/.local/share/Steam/steamapps/common/rust_dedicated/server/instance0/cfg
-   ```
+   `./server/$ID/cfg/` (relative to the _RustDedicated_ installation
+   directory).
 
    Examples for `server.cfg` and `users.cfg` are provided in this repository.
 

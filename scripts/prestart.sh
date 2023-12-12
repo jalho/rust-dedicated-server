@@ -79,12 +79,16 @@ if test $update_status -ne 0; then
 fi
 
 if ! test -d $(dirname $RDS_ABSOLUTE_PATH); then
-    echo "Expected RustDedicated installation dir in $(dirname $RDS_ABSOLUTE_PATH)"
+    echo "Expected RustDedicated installation dir in $(dirname $RDS_ABSOLUTE_PATH) -- cannot proceed!"
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
 fi
 if ! test -f $RDS_ABSOLUTE_PATH; then
-    echo "Expected executable RustDedicated in installation dir in $(dirname $RDS_ABSOLUTE_PATH)"
+    echo "Expected executable RustDedicated in installation dir in $(dirname $RDS_ABSOLUTE_PATH) -- cannot proceed!"
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
+fi
+
+if ! test -d $(dirname $RDS_ABSOLUTE_PATH/server/$RDS_INSTANCE_ID/cfg); then
+    mkdir -p $(dirname $RDS_ABSOLUTE_PATH)/server/$RDS_INSTANCE_ID/cfg
 fi
 
 exit $EXIT_STATUS_SHOULD_RESTART

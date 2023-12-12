@@ -14,5 +14,5 @@ echo "Loading 'carbon/tools/environment.sh' ..."
 source ./carbon/tools/environment.sh
 echo "Loading 'carbon/tools/environment.sh' exited with code $?"
 
-# start the game server using the instance config identified as "instance0"
-./RustDedicated -batchmode -logfile "rds.log" +server.identity "instance0" 2>&1
+# start a game server using a specific instance config
+./RustDedicated -batchmode -logfile "rds.log" +server.identity "$RDS_INSTANCE_ID" 2>&1

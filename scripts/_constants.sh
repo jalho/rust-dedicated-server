@@ -3,3 +3,6 @@ RDS_ABSOLUTE_PATH="/home/rust/Steam/steamapps/common/rust_dedicated/RustDedicate
 
 # hopefully this is not too volatile...
 STEAMCMD_ABSOLUTE_PATH="/usr/games/steamcmd"
+
+# an arbitrary ID for a RustDedicated instance that we must choose
+RDS_INSTANCE_ID="instance0"
