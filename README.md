@@ -68,8 +68,13 @@ Carbon v1.2023.4314.0758
 8. Enable and start the _systemd_ managed service.
 
    ```
-   systemctl enable rds.service
-   systemctl start rds.service
+   systemctl enable rds.service && systemctl start rds.service
+   ```
+
+   Likewise to disable:
+
+   ```
+   systemctl stop rds.service && systemctl disable rds.service
    ```
 
 ## Tips
