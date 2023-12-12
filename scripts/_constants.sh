@@ -6,3 +6,6 @@ STEAMCMD_ABSOLUTE_PATH="/usr/games/steamcmd"
 
 # an arbitrary ID for a RustDedicated instance that we must choose
 RDS_INSTANCE_ID="instance0"
+
+# an URL we trust to distribute Carbon
+CARBON_RELEASE_URL="https://github.com/CarbonCommunity/Carbon/releases/download/production_build/Carbon.Linux.Release.tar.gz"
