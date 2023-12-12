@@ -20,6 +20,12 @@ Carbon v1.2023.4314.0758
 
 3. Put the dir `scripts/` from this repository in `/home/rust/`.
 
+   **TODO:**
+
+   - Make `scripts/prestart.sh` update Carbon
+   - Add some interval mechanism that restarts the server with new seed every week
+   - Add some interval mechanism that restarts the server with new seed and wipes blueprints every month
+
 4. Using _SteamCMD_, install [_RustDedicated_](https://developer.valvesoftware.com/wiki/Rust_Dedicated_Server#Installation)
    for the user `rust` created earlier. In later steps we'll configure _systemd_
    to run it.
