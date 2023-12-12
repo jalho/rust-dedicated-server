@@ -27,10 +27,13 @@ Carbon v1.2023.4314.0758
    /usr/games/steamcmd +login anonymous +app_update 258550 validate +quit
    ```
 
-   As of 3 Dec 2023, the _RustDedicated_ installation goes to
+   TODO: Use `force_install_dir`!
+   - As of 3 Dec 2023, the _RustDedicated_ installation goes to
    `~/.local/share/Steam/steamapps/common/rust_dedicated/` by default.
+   - As of 12 Dec 2023, the _RustDedicated_ installation goes to
+   `~/Steam/steamapps/common/rust_dedicated/` by default.
 
-4. Configure the game server by placing `server.cfg` and `users.cfg` in path
+5. Configure the game server by placing `server.cfg` and `users.cfg` in path
    `./server/instance0/cfg/` (relative to the _RustDedicated_ installation
    directory). `instance0` refers to a Rust internal identity which should match
    the identity parameter given to the `RustDedicated` executable when it's run.
@@ -43,10 +46,10 @@ Carbon v1.2023.4314.0758
 
    Examples for `server.cfg` and `users.cfg` are provided in this repository.
 
-5. Put the dir `scripts/` in `/home/rust/`. The _systemd_ managed service
+6. Put the dir `scripts/` in `/home/rust/`. The _systemd_ managed service
    expects that.
 
-6. Install [Carbon](https://carbonmod.gg/) (modding framework). As of 3 Dec 2023
+7. Install [Carbon](https://carbonmod.gg/) (modding framework). As of 3 Dec 2023
    it's distributed via GitHub releases so that you may extract it to the
    _RustDedicated_ installation directory:
 
@@ -62,14 +65,14 @@ Carbon v1.2023.4314.0758
    The Carbon installation is enabled in [start.sh](./scripts/start.sh) by
    sourcing the Carbon included `environment.sh`.
 
-7. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
+8. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
    _systemd_ managed service. Then reload the daemon with the new config:
 
    ```
    systemctl daemon-reload
    ```
 
-8. Enable and start the _systemd_ managed service.
+9. Enable and start the _systemd_ managed service.
 
    ```
    systemctl enable rds.service
