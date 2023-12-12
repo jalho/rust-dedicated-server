@@ -32,7 +32,7 @@ Carbon v1.2023.4314.0758
 
    The script `prestart.sh` is the same that _systemd_ will use to regularly check whether to update _RustDedicated_.
 
-   Once the script has completed running, _RustDedicated_ should be installed in `/home/rust/Steam/steamapps/common/rust_dedicated/`. This is how it worked 12 Dec 2023. If not, update [\_constants.sh](./scripts/_constants.sh) accordingly.
+   Once the script has completed running, _RustDedicated_ should be installed in `$RDS_ABSOLUTE_PATH` defined in [\_constants.sh](./scripts/_constants.sh).
 
 5. Configure the game server by placing `server.cfg` and `users.cfg` in path
    `./server/$ID/cfg/` (relative to the _RustDedicated_ installation
@@ -41,11 +41,13 @@ Carbon v1.2023.4314.0758
    Examples for `server.cfg` and `users.cfg` are provided in this repository.
 
 6. Install [Carbon](https://carbonmod.gg/) (modding framework). As of 3 Dec 2023
-   it's distributed via GitHub releases so that you may extract it to the
-   _RustDedicated_ installation directory:
+   it's distributed via [GitHub releases](https://github.com/CarbonCommunity/Carbon/releases)
+   so that you may extract it to the _RustDedicated_ installation directory.
+
+   For example:
 
    ```
-   cd ~/.local/share/Steam/steamapps/common/rust_dedicated/
+   cd $(dirname $RDS_ABSOLUTE_PATH)
    wget https://github.com/CarbonCommunity/Carbon/releases/download/production_build/Carbon.Linux.Release.tar.gz
    tar -xzf Carbon.Linux.Minimal.tar.gz
    ```
