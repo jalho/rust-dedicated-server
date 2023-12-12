@@ -22,11 +22,6 @@ Carbon v1.2023.4314.0758
 
    Check values defined in [\_constants.sh](./scripts/_constants.sh), like `$RCON_PASSWORD`.
 
-   **TODO:**
-
-   - Add some interval mechanism that restarts the server with new seed every week
-   - Add some interval mechanism that restarts the server with new seed and wipes blueprints every month
-
 4. Install [_RustDedicated_](https://developer.valvesoftware.com/wiki/Rust_Dedicated_Server#Installation)
    and [_Carbon_](https://carbonmod.gg/) (modding framework).
 
@@ -52,22 +47,27 @@ Carbon v1.2023.4314.0758
    wget https://raw.githubusercontent.com/jalho/rust-dedicated-server/master/users.cfg
    ```
 
-6. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
-   _systemd_ managed service. Then reload the daemon with the new config:
+6. Put the files `*.service` and `*.timer` files from this repository to
+   `/etc/systemd/system/`. This configures _systemd_ managed services and
+   their associated timers. Reload the daemon with the new config:
 
    ```
    systemctl daemon-reload
    ```
 
-7. Enable and start the _systemd_ managed service.
+7. Enable and start the _systemd_ managed services and their associated timers:
 
    ```
    systemctl enable rds.service && systemctl start rds.service
+   systemctl enable rds-wipe.service && systemctl start rds-wipe.service
+   systemctl enable rds-wipe.timer && systemctl start rds-wipe.timer
    ```
 
    Likewise to disable:
 
    ```
+   systemctl stop rds-wipe.timer && systemctl disable rds-wipe.timer
+   systemctl stop rds-wipe.service && systemctl disable rds-wipe.service
    systemctl stop rds.service && systemctl disable rds.service
    ```
 

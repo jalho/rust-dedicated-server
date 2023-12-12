@@ -1,0 +1,8 @@
+[Unit]
+Description=RustDedicated Wipe Timer
+
+[Timer]
+OnCalendar=Wed *-*-* 14:00:00
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=RustDedicated Server Wipe
+
+[Service]
+Type=simple
+ExecStart=bash /home/rust/scripts/wipe.sh
+
+[Install]
+WantedBy=default.target
