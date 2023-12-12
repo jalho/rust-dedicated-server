@@ -18,7 +18,7 @@ Carbon v1.2023.4314.0758
 2. Install [_SteamCMD_](https://developer.valvesoftware.com/wiki/SteamCMD).
    It is used to install _RustDedicated_.
 
-3. Using _SteamCMD_, install _RustDedicated_ for the user `rust` created earlier.
+3. Using _SteamCMD_, install [_RustDedicated_](https://developer.valvesoftware.com/wiki/Rust_Dedicated_Server#Installation) for the user `rust` created earlier.
    In later steps we'll configure _systemd_ to run it.
 
    ```
