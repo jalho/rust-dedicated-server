@@ -18,8 +18,11 @@ Carbon v1.2023.4314.0758
 2. Install [_SteamCMD_](https://developer.valvesoftware.com/wiki/SteamCMD).
    It is used to install _RustDedicated_.
 
-3. Using _SteamCMD_, install [_RustDedicated_](https://developer.valvesoftware.com/wiki/Rust_Dedicated_Server#Installation) for the user `rust` created earlier.
-   In later steps we'll configure _systemd_ to run it.
+3. Put the dir `scripts/` from this repository in `/home/rust/`.
+
+4. Using _SteamCMD_, install [_RustDedicated_](https://developer.valvesoftware.com/wiki/Rust_Dedicated_Server#Installation)
+   for the user `rust` created earlier. In later steps we'll configure _systemd_
+   to run it.
 
    ```
    su rust
@@ -31,14 +34,11 @@ Carbon v1.2023.4314.0758
 
    Once the script has completed running, _RustDedicated_ should be installed in `/home/rust/Steam/steamapps/common/rust_dedicated/`. This is how it worked 12 Dec 2023. If not, update [\_constants.sh](./scripts/_constants.sh) accordingly.
 
-4. Configure the game server by placing `server.cfg` and `users.cfg` in path
+5. Configure the game server by placing `server.cfg` and `users.cfg` in path
    `./server/$ID/cfg/` (relative to the _RustDedicated_ installation
    directory).
 
    Examples for `server.cfg` and `users.cfg` are provided in this repository.
-
-5. Put the dir `scripts/` in `/home/rust/`. The _systemd_ managed service
-   expects that.
 
 6. Install [Carbon](https://carbonmod.gg/) (modding framework). As of 3 Dec 2023
    it's distributed via GitHub releases so that you may extract it to the
