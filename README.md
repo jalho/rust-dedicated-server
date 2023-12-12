@@ -49,7 +49,7 @@ Carbon v1.2023.4314.0758
    ```
    cd $(dirname $RDS_ABSOLUTE_PATH)
    wget https://github.com/CarbonCommunity/Carbon/releases/download/production_build/Carbon.Linux.Release.tar.gz
-   tar -xzf Carbon.Linux.Minimal.tar.gz
+   tar -xzf Carbon.Linux.Release.tar.gz
    ```
 
    This will create a `carbon/` directory in the _RustDedicated_ installation
