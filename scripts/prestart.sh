@@ -1,24 +1,14 @@
 #!/bin/bash
 
+source /home/rust/scripts/_constants.sh
+
 # systemd compatible exit statuses
 EXIT_STATUS_SHOULD_RESTART=0
 EXIT_STATUS_SHOULD_NOT_RESTART=1
 
-# other constants
-RDS_DEFAULT_INSTALL_DIR="/home/rust/.local/share/Steam/steamapps/common/rust_dedicated"
-STEAMCMD_ENTRYPOINT_PATH="/home/rust/.steam/steam/steamcmd/steamcmd.sh"
-
-#
-#   By default, as of 2 Dec 2023, this will install the game server in
-#   `~/.local/share/Steam/steamapps/common/rust_dedicated/RustDedicated`
-#   where `RustDedicated` is the executable (ELF).
-#
-#   In the same directory with the executable there will also be a start
-#   script called `runds.sh` for running the server with appropriate parameters.
-#
+# TODO: Explicitly specify RDS installation directory somehow!
 function update_rust() {
-    cd $(dirname $STEAMCMD_ENTRYPOINT_PATH)
-    ./$(basename $STEAMCMD_ENTRYPOINT_PATH) +login anonymous +app_update 258550 validate +quit
+    $STEAMCMD_ABSOLUTE_PATH +login anonymous +app_update 258550 validate +quit
 }
 
 echo "checking requirements..."
@@ -38,10 +28,10 @@ fi
 #
 # Installation instructions: https://developer.valvesoftware.com/wiki/SteamCMD
 # (Accessed 2 Dec 2023)
-if test -f $STEAMCMD_ENTRYPOINT_PATH; then
-    echo "$STEAMCMD_ENTRYPOINT_PATH is installed"
+if test -f $STEAMCMD_ABSOLUTE_PATH; then
+    echo "$STEAMCMD_ABSOLUTE_PATH is installed"
 else
-    echo "$STEAMCMD_ENTRYPOINT_PATH is not installed -- cannot proceed!"
+    echo "$STEAMCMD_ABSOLUTE_PATH is not installed -- cannot proceed!"
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
 fi
 
@@ -88,12 +78,12 @@ if test $update_status -ne 0; then
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
 fi
 
-if ! test -d $RDS_DEFAULT_INSTALL_DIR; then
-    echo "Expected RustDedicated installation dir in $RDS_DEFAULT_INSTALL_DIR"
+if ! test -d $(dirname $RDS_ABSOLUTE_PATH); then
+    echo "Expected RustDedicated installation dir in $(dirname $RDS_ABSOLUTE_PATH)"
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
 fi
-if ! test -f $RDS_DEFAULT_INSTALL_DIR/RustDedicated; then
-    echo "Expected executable RustDedicated in installation dir in $RDS_DEFAULT_INSTALL_DIR"
+if ! test -f $RDS_ABSOLUTE_PATH; then
+    echo "Expected executable RustDedicated in installation dir in $(dirname $RDS_ABSOLUTE_PATH)"
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
 fi
 
