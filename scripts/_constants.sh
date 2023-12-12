@@ -9,3 +9,7 @@ RDS_INSTANCE_ID="instance0"
 
 # an URL we trust to distribute Carbon
 CARBON_RELEASE_URL="https://github.com/CarbonCommunity/Carbon/releases/download/production_build/Carbon.Linux.Release.tar.gz"
+
+# RCON -- cannot be configured in RDS instance config, so we must define env vars for CLI args
+RCON_PORT=28016
+RCON_PASSWORD="SET_ME"

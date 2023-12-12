@@ -20,6 +20,8 @@ Carbon v1.2023.4314.0758
 
 3. Put the dir `scripts/` from this repository in `/home/rust/`.
 
+   Check values defined in [\_constants.sh](./scripts/_constants.sh), like `$RCON_PASSWORD`.
+
    **TODO:**
 
    - Add some interval mechanism that restarts the server with new seed every week
