@@ -42,7 +42,13 @@ Carbon v1.2023.4314.0758
    `./server/$ID/cfg/` (relative to the _RustDedicated_ installation
    directory).
 
-   Examples for `server.cfg` and `users.cfg` are provided in this repository.
+   Examples for `server.cfg` and `users.cfg` are provided in this repository:
+
+   ```
+   cd $(dirname $RDS_ABSOLUTE_PATH)/server/$RDS_INSTANCE_ID/cfg
+   wget https://raw.githubusercontent.com/jalho/rust-dedicated-server/master/server.cfg
+   wget https://raw.githubusercontent.com/jalho/rust-dedicated-server/master/users.cfg
+   ```
 
 6. Put the file `rds.service` in `/etc/systemd/system/`. This configures the
    _systemd_ managed service. Then reload the daemon with the new config:
@@ -90,7 +96,7 @@ define a log file for it (e.g. `rds.log`). Observe that file if it seems no
 stdout is emitted from the process. For example:
 
 ```
-watch -n 1 "tail $(dirname RDS_ABSOLUTE_PATH)/rds.log"
+watch -n 1 "tail $(dirname $RDS_ABSOLUTE_PATH)/rds.log"
 ```
 
 Carbon emits its logs to `$(dirname RDS_ABSOLUTE_PATH)/carbon/logs/`.
