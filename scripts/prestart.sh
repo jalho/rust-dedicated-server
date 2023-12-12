@@ -87,13 +87,13 @@ if ! test -f $RDS_ABSOLUTE_PATH; then
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
 fi
 
-RDS_INSTANCE_CFG_DIR_PATH=$(dirname $RDS_ABSOLUTE_PATH/server/$RDS_INSTANCE_ID/cfg)
+RDS_INSTANCE_CFG_DIR_PATH=$(dirname $RDS_ABSOLUTE_PATH)/server/$RDS_INSTANCE_ID/cfg
 if ! test -d $RDS_INSTANCE_CFG_DIR_PATH; then
     echo "Creating RDS instance config dir $RDS_INSTANCE_CFG_DIR_PATH"
     mkdir -p $RDS_INSTANCE_CFG_DIR_PATH
 fi
 
-if ! test -d $(dirname $RDS_ABSOLUTE_PATH/carbon); then
+if ! test -d $(dirname $RDS_ABSOLUTE_PATH)/carbon; then
     PREWD=$(pwd)
 
     echo "Installing Carbon from $CARBON_RELEASE_URL"
