@@ -103,6 +103,14 @@ watch -n 1 "tail $(dirname $RDS_ABSOLUTE_PATH)/rds.log"
 
 Carbon emits its logs to `$(dirname RDS_ABSOLUTE_PATH)/carbon/logs/`.
 
+### Sending RCON commands
+
+Use e.g. [rcon-cli](https://github.com/jalho/rcon-cli):
+
+```
+$ rcon-cli --password "SET_ME" --command "playerlist"
+```
+
 ### Verifying the _systemd_ setup
 
 To verify that the _systemd_ setup works, you may kill the game server and see
