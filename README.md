@@ -101,9 +101,13 @@ watch -n 1 "tail /proc/$(pgrep RustDedicated)/fd/1"
 
 The script that starts _RustDedicated_ ([start.sh](./scripts/start.sh)) may
 define a log file for it (e.g. `rds.log`). Observe that file if it seems no
-stdout is emitted from the process.
+stdout is emitted from the process. For example:
 
-Carbon emits its logs to `carbon/logs/`.
+```
+watch -n 1 "tail $(dirname RDS_ABSOLUTE_PATH)/rds.log"
+```
+
+Carbon emits its logs to `$(dirname RDS_ABSOLUTE_PATH)/carbon/logs/`.
 
 ### Verifying the _systemd_ setup
 
