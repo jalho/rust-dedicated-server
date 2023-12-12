@@ -51,6 +51,12 @@ Carbon v1.2023.4314.0758
    `/etc/systemd/system/`. This configures _systemd_ managed services and
    their associated timers. Reload the daemon with the new config:
 
+   **TODO:**
+
+   - Add a dedicated health check service with short interval!
+     `RustDedicated` process sometimes hangs and won't restart!
+     Then remove health check stuff from `prestart.sh`.
+
    ```
    systemctl daemon-reload
    ```
