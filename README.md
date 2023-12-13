@@ -73,15 +73,14 @@ Carbon v1.2023.4314.0758
    `/etc/systemd/system/`. This configures _systemd_ managed services and
    their associated timers. Reload the daemon with the new config:
 
-   **TODO:**
-
-   - Add a dedicated health check service with short interval!
-     `RustDedicated` process sometimes hangs and won't restart!
-     Then remove health check stuff from `prestart.sh`.
-
    ```
    systemctl daemon-reload
    ```
+
+   **TODO:**
+   - Add a dedicated health check service with short interval!
+     `RustDedicated` process sometimes hangs and won't restart!
+     Then remove health check stuff from `prestart.sh`.
 
 8. Enable and start the _systemd_ managed services and their associated timers:
 
@@ -126,6 +125,8 @@ define a log file for it (e.g. `rds.log`). Observe that file if it seems no
 stdout is emitted from the process. For example:
 
 ```
+source /home/rust/scripts/_constants.sh
+RDS_ABSOLUTE_PATH=$(get_rds_absolute_path)
 watch -n 1 "tail $(dirname $RDS_ABSOLUTE_PATH)/rds.log"
 ```
 
