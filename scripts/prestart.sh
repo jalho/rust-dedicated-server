@@ -68,8 +68,6 @@ if $command_pgrep steamcmd &>/dev/null; then
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
 fi
 
-set -xe
-
 echo "Updating Rust using SteamCMD..."
 update_rust
 update_status=$?
