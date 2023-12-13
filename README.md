@@ -126,8 +126,7 @@ stdout is emitted from the process. For example:
 
 ```
 source /home/rust/scripts/_constants.sh && \
-RDS_ABSOLUTE_PATH=$(get_rds_absolute_path) \
-watch -n 1 "tail $(dirname $RDS_ABSOLUTE_PATH)/rds.log"
+watch -n 1 "tail $(dirname $(get_rds_absolute_path))/rds.log"
 ```
 
 Carbon emits its logs to `$(dirname RDS_ABSOLUTE_PATH)/carbon/logs/`.
