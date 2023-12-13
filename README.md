@@ -51,7 +51,7 @@ Carbon v1.2023.4314.0758
    `./server/$ID/cfg/` (relative to the _RustDedicated_ installation
    directory).
 
-   Examples for `server.cfg` and `users.cfg` are provided in this repository:
+   Examples for `server.cfg` and `users.cfg` are provided in this repository. Check the values defined in them.
 
    ```
    source scripts/_constants.sh
