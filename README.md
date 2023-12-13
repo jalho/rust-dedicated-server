@@ -54,7 +54,11 @@ Carbon v1.2023.4314.0758
    Examples for `server.cfg` and `users.cfg` are provided in this repository:
 
    ```
-   cd $(dirname $RDS_ABSOLUTE_PATH)/server/$RDS_INSTANCE_ID/cfg
+   source scripts/_constants.sh
+   ```
+
+   ```
+   cd $(dirname $(get_rds_absolute_path))/server/$RDS_INSTANCE_ID/cfg
    ```
    
    ```
