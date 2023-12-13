@@ -47,8 +47,6 @@ Carbon v1.2023.4314.0758
 
    The script `prestart.sh` is the same that _systemd_ will use to regularly check whether to update _RustDedicated_.
 
-   Once the script has completed running, _RustDedicated_ should be installed in `$RDS_ABSOLUTE_PATH` defined in [\_constants.sh](./scripts/_constants.sh).
-
 6. Configure the game server by placing `server.cfg` and `users.cfg` in path
    `./server/$ID/cfg/` (relative to the _RustDedicated_ installation
    directory).
