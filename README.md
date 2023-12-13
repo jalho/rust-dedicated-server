@@ -85,16 +85,16 @@ Carbon v1.2023.4314.0758
 8. Enable and start the _systemd_ managed services and their associated timers:
 
    ```
-   systemctl enable rds.service && systemctl start rds.service
-   systemctl enable rds-wipe.service && systemctl start rds-wipe.service
+   systemctl enable rds.service && systemctl start rds.service && \
+   systemctl enable rds-wipe.service && systemctl start rds-wipe.service && \
    systemctl enable rds-wipe.timer && systemctl start rds-wipe.timer
    ```
 
    Likewise to disable:
 
    ```
-   systemctl stop rds-wipe.timer && systemctl disable rds-wipe.timer
-   systemctl stop rds-wipe.service && systemctl disable rds-wipe.service
+   systemctl stop rds-wipe.timer && systemctl disable rds-wipe.timer && \
+   systemctl stop rds-wipe.service && systemctl disable rds-wipe.service && \
    systemctl stop rds.service && systemctl disable rds.service
    ```
 
@@ -125,8 +125,8 @@ define a log file for it (e.g. `rds.log`). Observe that file if it seems no
 stdout is emitted from the process. For example:
 
 ```
-source /home/rust/scripts/_constants.sh
-RDS_ABSOLUTE_PATH=$(get_rds_absolute_path)
+source /home/rust/scripts/_constants.sh && \
+RDS_ABSOLUTE_PATH=$(get_rds_absolute_path) \
 watch -n 1 "tail $(dirname $RDS_ABSOLUTE_PATH)/rds.log"
 ```
 
