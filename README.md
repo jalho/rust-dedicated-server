@@ -35,7 +35,13 @@ Carbon v1.2023.4314.0758
 
    ```
    su rust
+   ```
+
+   ```
    cd /home/rust
+   ```
+
+   ```
    bash /home/rust/scripts/prestart.sh
    ```
 
@@ -51,7 +57,13 @@ Carbon v1.2023.4314.0758
 
    ```
    cd $(dirname $RDS_ABSOLUTE_PATH)/server/$RDS_INSTANCE_ID/cfg
+   ```
+   
+   ```
    wget https://raw.githubusercontent.com/jalho/rust-dedicated-server/master/server.cfg
+   ```
+
+   ```
    wget https://raw.githubusercontent.com/jalho/rust-dedicated-server/master/users.cfg
    ```
 
