@@ -12,7 +12,7 @@ Carbon v1.2023.4314.0758
    expects that.
 
    ```
-   useradd -m rust
+   useradd -m -s $(which bash) rust
    ```
 
 2. Install [_SteamCMD_](https://developer.valvesoftware.com/wiki/SteamCMD).
