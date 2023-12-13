@@ -18,11 +18,19 @@ Carbon v1.2023.4314.0758
 2. Install [_SteamCMD_](https://developer.valvesoftware.com/wiki/SteamCMD).
    It is used to install _RustDedicated_.
 
-3. Put the dir `scripts/` from this repository in `/home/rust/`.
+   ```
+   sudo apt update; sudo apt install software-properties-common; sudo apt-add-repository non-free; sudo dpkg --add-architecture i386; sudo apt update
+   ```
+
+   ```
+   sudo apt install steamcmd
+   ```
+
+4. Put the dir `scripts/` from this repository in `/home/rust/`.
 
    Check values defined in [\_constants.sh](./scripts/_constants.sh), like `$RCON_PASSWORD`.
 
-4. Install [_RustDedicated_](https://developer.valvesoftware.com/wiki/Rust_Dedicated_Server#Installation)
+5. Install [_RustDedicated_](https://developer.valvesoftware.com/wiki/Rust_Dedicated_Server#Installation)
    and [_Carbon_](https://carbonmod.gg/) (modding framework).
 
    ```
@@ -35,7 +43,7 @@ Carbon v1.2023.4314.0758
 
    Once the script has completed running, _RustDedicated_ should be installed in `$RDS_ABSOLUTE_PATH` defined in [\_constants.sh](./scripts/_constants.sh).
 
-5. Configure the game server by placing `server.cfg` and `users.cfg` in path
+6. Configure the game server by placing `server.cfg` and `users.cfg` in path
    `./server/$ID/cfg/` (relative to the _RustDedicated_ installation
    directory).
 
@@ -47,7 +55,7 @@ Carbon v1.2023.4314.0758
    wget https://raw.githubusercontent.com/jalho/rust-dedicated-server/master/users.cfg
    ```
 
-6. Put the files `*.service` and `*.timer` files from this repository to
+7. Put the files `*.service` and `*.timer` files from this repository to
    `/etc/systemd/system/`. This configures _systemd_ managed services and
    their associated timers. Reload the daemon with the new config:
 
@@ -61,7 +69,7 @@ Carbon v1.2023.4314.0758
    systemctl daemon-reload
    ```
 
-7. Enable and start the _systemd_ managed services and their associated timers:
+8. Enable and start the _systemd_ managed services and their associated timers:
 
    ```
    systemctl enable rds.service && systemctl start rds.service
