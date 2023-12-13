@@ -76,6 +76,7 @@ if test $update_status -ne 0; then
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
 fi
 
+RDS_ABSOLUTE_PATH=$(get_rds_absolute_path)
 if ! test -d $(dirname $RDS_ABSOLUTE_PATH); then
     echo "Expected RustDedicated installation dir in $(dirname $RDS_ABSOLUTE_PATH) -- cannot proceed!"
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
@@ -85,6 +86,7 @@ if ! test -f $RDS_ABSOLUTE_PATH; then
     exit $EXIT_STATUS_SHOULD_NOT_RESTART
 fi
 
+RDS_INSTANCE_CFG_DIR_PATH=$(dirname $RDS_ABSOLUTE_PATH)/server/$RDS_INSTANCE_ID/cfg
 if ! test -d $RDS_INSTANCE_CFG_DIR_PATH; then
     echo "Creating RDS instance config dir $RDS_INSTANCE_CFG_DIR_PATH"
     mkdir -p $RDS_INSTANCE_CFG_DIR_PATH

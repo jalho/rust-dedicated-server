@@ -2,7 +2,7 @@
 
 source /home/rust/scripts/_constants.sh
 
-RDS_INSTALLATION_DIR=$(dirname $RDS_ABSOLUTE_PATH)
+RDS_INSTALLATION_DIR=$(dirname $(get_rds_absolute_path))
 LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$RDS_INSTALLATION_DIR/RustDedicated_Data/Plugins"
 LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$RDS_INSTALLATION_DIR/RustDedicated_Data/Plugins/x86_64"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH

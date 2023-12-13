@@ -22,6 +22,8 @@ function set_seed() {
 
 echo "Wipe procedure initiated"
 
+RDS_ABSOLUTE_PATH=$(get_rds_absolute_path)
+RDS_INSTANCE_CFG_DIR_PATH=$(dirname $RDS_ABSOLUTE_PATH)/server/$RDS_INSTANCE_ID/cfg
 set_seed $RDS_INSTANCE_CFG_DIR_PATH/server.cfg
 
 # TODO: Wipe blueprints once a month
