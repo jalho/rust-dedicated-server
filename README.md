@@ -140,6 +140,16 @@ Use e.g. [rcon-cli](https://github.com/jalho/rcon-cli):
 $ rcon-cli --password "SET_ME" --command "playerlist"
 ```
 
+```
+$ rcon-cli -p SET_ME -c rendermap
+Received message: {
+  "Message": "Saved map render to: /home/rust/.local/share/Steam/steamapps/common/rust_dedicated/map_3000_20962.png",
+  "Identifier": 1,
+  "Type": "Generic",
+  "Stacktrace": ""
+}
+```
+
 ### Verifying the _systemd_ setup
 
 To verify that the _systemd_ setup works, you may kill the game server and see
