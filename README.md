@@ -1,160 +1,60 @@
-## Usage
+# Weekend Rust Server
 
-Tested on 3 Dec 2023 on:
+My setup for hosting _RustDedicated_ server (RDS), i.e. a game server for the
+survival video game called _Rust_. The server is distributed via _SteamCMD_ as
+an executable called `RustDedicated`.
 
-```
-Debian GNU/Linux 12 (bookworm)
-Steam Console Client (c) Valve Corporation - version 1701290101
-Carbon v1.2023.4314.0758
-```
+The setup's idea is to have a Rust server reliably up part time, mainly on
+weekends. The reliability part is solved by managing the server with _systemd_
+so that it restarts and updates automatically when necessary, and the part time
+weekend focus is solved by deploying the stack on Google Cloud and utilizing VM
+instance schedules there. The point of the part time scheduling is to only incur
+server hosting costs when necessary, i.e. on weekends, and maybe a couple hours
+on weekday evenings.
 
-1. Create user `rust` with home `/home/rust/`. The _systemd_ managed service
-   expects that.
+## Components
 
-   ```
-   useradd -m -s $(which bash) rust
-   ```
+- _Rust Server Starter_: Wipe, update and start a Rust server.
 
-2. Install [_SteamCMD_](https://developer.valvesoftware.com/wiki/SteamCMD).
-   It is used to install _RustDedicated_.
+  This program is executed each time at the VM instance's startup. It performs
+  the following task sequence:
 
-   ```
-   sudo apt update; sudo apt install software-properties-common; sudo apt-add-repository non-free; sudo dpkg --add-architecture i386; sudo apt update
-   ```
+  1.  **Conditional Wipe:** Check whether it is Friday and whether or not the
+      Rust server has wiped today already. If there's already been a wipe today,
+      then proceed to step #2 ("Rust Server Startup"). If there hasn't been a
+      wipe today yet, then do the wipe:
 
-   ```
-   sudo apt install steamcmd
-   ```
+      1. Make sure the Rust server is not running. Disable and stop any
+         corresponding systemd managed services. Kill the corresponding
+         processes started by the services.
+      2. Delete saved map files and any other weekly wipe specific data.
+      3. Generate and configure a new random map seed.
+      4. If it's the first Friday of the month, delete players' saved blueprints.
 
-4. Put the dir `scripts/` from this repository in `/home/rust/`.
+  2.  **Rust Server Update:** Update the Rust server if there are updates
+      available, using SteamCMD.
 
-   Check values defined in [\_constants.sh](./scripts/_constants.sh), like `$RCON_PASSWORD`.
+  3.  **Rust Server Start:** Start the game server.
 
-5. Install [_RustDedicated_](https://developer.valvesoftware.com/wiki/Rust_Dedicated_Server#Installation)
-   and [_Carbon_](https://carbonmod.gg/) (modding framework).
+- _RDS Sync_: A program that sits between web browser clients and RDS, sending
+  game state updates to the clients and passing admin commands from the clients
+  to the game server.
 
-   ```
-   su rust
-   ```
+  See [jalho/rds-sync](https://github.com/jalho/rds-sync).
 
-   ```
-   cd /home/rust
-   ```
+## Setting things up
 
-   ```
-   bash /home/rust/scripts/prestart.sh
-   ```
+1. Provision a virtual machine (VM) for running `RustDedicated`.
+   Debian 11, 2-4 vCPUs and 16 GB of RAM is good.
 
-   The script `prestart.sh` is the same that _systemd_ will use to regularly check whether to update _RustDedicated_.
+2. Configure _Rust Server Starter_ described above to be managed by systemd on
+   the VM. It should run at VM startup, and rerun automatically if the started
+   `RustDedicated` process terminates for any reason.
 
-6. Configure the game server by placing `server.cfg` and `users.cfg` in path
-   `./server/$ID/cfg/` (relative to the _RustDedicated_ installation
-   directory).
-
-   Examples for `server.cfg` and `users.cfg` are provided in this repository. Check the values defined in them.
-
-   ```
-   source scripts/_constants.sh
-   ```
-
-   ```
-   cd $(dirname $(get_rds_absolute_path))/server/$RDS_INSTANCE_ID/cfg
-   ```
-   
-   ```
-   wget https://raw.githubusercontent.com/jalho/rust-dedicated-server/master/server.cfg
-   ```
-
-   ```
-   wget https://raw.githubusercontent.com/jalho/rust-dedicated-server/master/users.cfg
-   ```
-
-7. Put the files `*.service` and `*.timer` files from this repository to
-   `/etc/systemd/system/`. This configures _systemd_ managed services and
-   their associated timers. Reload the daemon with the new config:
-
-   ```
-   systemctl daemon-reload
-   ```
-
-   **TODO:**
-   - Add a dedicated health check service with short interval!
-     `RustDedicated` process sometimes hangs and won't restart!
-     Then remove health check stuff from `prestart.sh`.
-
-8. Enable and start the _systemd_ managed services and their associated timers:
-
-   ```
-   systemctl enable rds.service && systemctl start rds.service && \
-   systemctl enable rds-wipe.service && systemctl start rds-wipe.service && \
-   systemctl enable rds-wipe.timer && systemctl start rds-wipe.timer
-   ```
-
-   Likewise to disable:
-
-   ```
-   systemctl stop rds-wipe.timer && systemctl disable rds-wipe.timer && \
-   systemctl stop rds-wipe.service && systemctl disable rds-wipe.service && \
-   systemctl stop rds.service && systemctl disable rds.service
-   ```
-
-## Tips
-
-### Observing logs
-
-See the _systemd_ managed service's logs:
-
-```
-journalctl -fu rds.service
-```
-
-or
-
-```
-journalctl -xeu rds.service
-```
-
-Watch some process' stdout:
-
-```
-watch -n 1 "tail /proc/$(pgrep RustDedicated)/fd/1"
-```
-
-The script that starts _RustDedicated_ ([start.sh](./scripts/start.sh)) may
-define a log file for it (e.g. `rds.log`). Observe that file if it seems no
-stdout is emitted from the process. For example:
-
-```
-source /home/rust/scripts/_constants.sh && \
-watch -n 1 "tail $(dirname $(get_rds_absolute_path))/rds.log"
-```
-
-Carbon emits its logs to `$(dirname RDS_ABSOLUTE_PATH)/carbon/logs/`.
-
-### Sending RCON commands
-
-Use e.g. [rcon-cli](https://github.com/jalho/rcon-cli):
-
-```
-$ rcon-cli --password "SET_ME" --command "playerlist"
-```
-
-```
-$ rcon-cli -p SET_ME -c rendermap
-Received message: {
-  "Message": "Saved map render to: /home/rust/.local/share/Steam/steamapps/common/rust_dedicated/map_3000_20962.png",
-  "Identifier": 1,
-  "Type": "Generic",
-  "Stacktrace": ""
-}
-```
-
-### Verifying the _systemd_ setup
-
-To verify that the _systemd_ setup works, you may kill the game server and see
-how it gets updated and restarted (or whatever else is defined in scripts
-referred to in [rds.service](./rds.service)):
-
-```
-kill $(pgrep RustDedicated)
-```
+3. Set up VM instance schedules (a Google Cloud feature). For example:
+   - Start the VM:
+     - Monday to Friday: at 14 UTC
+     - Saturday and Sunday: no start -- should be up already
+   - Stop the VM:
+     - Sunday to Thursday: at midnight UTC
+     - Friday and Saturday: no stop -- let it run
