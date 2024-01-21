@@ -104,6 +104,10 @@ source $CARBON_INIT
 $RDS_EXECUTABLE -batchmode -logfile "$RDS_LOGFILE" +server.identity "$RDS_INSTANCE_ID" +rcon.port 28016 +rcon.web 1 +rcon.password "$RCON_PASSWORD" >/dev/null 2>&1 &
 
 set +x
+if test $(pgrep RustDedicated); then
+    echo "Server is starting..."
+    alert_discord $DISCORD_WEBHOOK_URL "Server is starting..."
+fi
 wait_for_udp "localhost" $RDS_EXPECTED_GAME_PORT $RDS_START_TIMEOUT_SECONDS
 if test $? -eq 0; then
     echo "Server is up"
