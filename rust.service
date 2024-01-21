@@ -1,0 +1,16 @@
+[Unit]
+Description=Rust
+After=network.target
+
+[Service]
+ExecStart=/home/rust/scripts/start-rust.sh
+Restart=always
+KillMode=process
+User=rust
+Group=rust
+WorkingDirectory=/home/rust
+Environment="RCON_PASSWORD=SET_ME"
+Environment="DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/0000000000000000000/0aa0AaAaAAa0AaaAA0aAAaaaAAaAAAaA0aAAa0aaaAaAa_Aa-AaAAA_0AaAAaAAAa0aA"
+
+[Install]
+WantedBy=default.target
