@@ -1,7 +1,4 @@
-use std::{
-    path::PathBuf,
-    process::{Command, Stdio},
-};
+use std::path::PathBuf;
 
 /// Parameters:
 /// - **Absolute path to working directory** from which any rds-manager
@@ -12,10 +9,10 @@ use std::{
 ///   server updating, server starting, server detected unhealthy etc.
 fn main() {
     let discord_webhook_url = String::from("TODO");
-    let working_directory: PathBuf = "/home/rust".into();
+    let working_directory: PathBuf = "/home/rust/".into();
 
     loop {
-        if check_for_updates() {
+        if check_for_updates(&working_directory) {
             update(&working_directory);
         }
 
@@ -26,40 +23,68 @@ fn main() {
 }
 
 /// TODO: How to check whether there are updates available for _RustDedicated_?
-fn check_for_updates() -> bool {
+fn check_for_updates(working_directory: &PathBuf) -> bool {
+    Command::new(
+        working_directory,
+        String::from("echo"),
+        vec![String::from("TODO: Check for updates somehow!")],
+    )
+    .execute();
+
     return true;
 }
 
 /// Update _RustDedicated_ using SteamCMD.
 fn update(working_directory: &PathBuf) {
-    let mut cmd = Command::new("echo");
-    cmd.current_dir(working_directory);
-    cmd.args(["Updating or installing RustDedicated using SteamCMD..."]);
-    cmd.stderr(Stdio::null());
-
-    // wait to finish
-    match cmd.status() {
-        Ok(_) => {}
-        Err(err) => {
-            eprintln!("{:?}", err);
-            todo!();
-        }
-    }
+    Command::new(
+        working_directory,
+        String::from("echo"),
+        vec![String::from(
+            "TODO: Install or update RustDedicated using SteamCMD!",
+        )],
+    )
+    .execute();
 }
 
 /// Run _RustDedicated_ executable. Return when the executable finishes.
 fn run_server_blocking(working_directory: &PathBuf) {
-    let mut cmd = Command::new("echo");
-    cmd.current_dir(working_directory);
-    cmd.args(["Running RustDedicated..."]);
-    cmd.stderr(Stdio::null());
+    Command::new(
+        working_directory,
+        String::from("echo"),
+        vec![String::from("TODO: Run RustDedicated!")],
+    )
+    .execute();
+}
 
-    // wait to finish
-    match cmd.status() {
-        Ok(_) => {}
-        Err(err) => {
-            eprintln!("{:?}", err);
-            todo!();
+struct Command<'execution_context> {
+    executable_path_name: String,
+    working_directory: &'execution_context PathBuf,
+    argv: Vec<String>,
+}
+
+impl<'execution_context> Command<'execution_context> {
+    fn new(
+        working_directory: &'execution_context PathBuf,
+        executable_path_name: String,
+        args: Vec<String>,
+    ) -> Self {
+        return Command {
+            executable_path_name,
+            working_directory,
+            argv: args,
+        };
+    }
+
+    fn execute(&self) {
+        let mut cmd = std::process::Command::new(&self.executable_path_name);
+        cmd.current_dir(&self.working_directory);
+        cmd.args(&self.argv);
+        match cmd.status() {
+            Ok(_) => {}
+            Err(_) => {
+                eprintln!("Failed to execute '{}' in '{}'! Is the executable installed? Does the working directory exist?", self.executable_path_name, self.working_directory.to_string_lossy());
+                todo!();
+            }
         }
     }
 }
