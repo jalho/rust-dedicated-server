@@ -24,6 +24,8 @@ fn install_or_update(working_directory: &PathBuf) {
         working_directory,
         String::from("steamcmd"),
         vec![
+            String::from("+force_install_dir"),
+            working_directory.to_string_lossy().to_string(),
             String::from("+login"),
             String::from("anonymous"),
             String::from("+app_update"),
