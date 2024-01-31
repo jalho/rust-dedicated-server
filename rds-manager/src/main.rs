@@ -12,36 +12,25 @@ fn main() {
     let working_directory: PathBuf = "/home/rust/".into();
 
     loop {
-        if check_for_updates(&working_directory) {
-            update(&working_directory);
-        }
-
+        install_or_update(&working_directory);
         run_server_blocking(&working_directory);
-
         panic!();
     }
 }
 
-/// TODO: How to check whether there are updates available for _RustDedicated_?
-fn check_for_updates(working_directory: &PathBuf) -> bool {
+/// Install or update _RustDedicated_ using SteamCMD.
+fn install_or_update(working_directory: &PathBuf) {
     Command::new(
         working_directory,
-        String::from("echo"),
-        vec![String::from("TODO: Check for updates somehow!")],
-    )
-    .execute();
-
-    return true;
-}
-
-/// Update _RustDedicated_ using SteamCMD.
-fn update(working_directory: &PathBuf) {
-    Command::new(
-        working_directory,
-        String::from("echo"),
-        vec![String::from(
-            "TODO: Install or update RustDedicated using SteamCMD!",
-        )],
+        String::from("steamcmd"),
+        vec![
+            String::from("+login"),
+            String::from("anonymous"),
+            String::from("+app_update"),
+            String::from("258550"),
+            String::from("validate"),
+            String::from("+quit"),
+        ],
     )
     .execute();
 }
@@ -82,7 +71,11 @@ impl<'execution_context> Command<'execution_context> {
         match cmd.status() {
             Ok(_) => {}
             Err(_) => {
-                eprintln!("Failed to execute '{}' in '{}'! Is the executable installed? Does the working directory exist?", self.executable_path_name, self.working_directory.to_string_lossy());
+                eprintln!(
+                    "Failed to execute '{}' in '{}'! Is the executable installed? Does the working directory exist?",
+                    self.executable_path_name,
+                    self.working_directory.to_string_lossy(),
+                );
                 todo!();
             }
         }
