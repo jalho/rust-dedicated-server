@@ -21,12 +21,28 @@ fn main() {
 /// files.
 fn check_working_dir(working_directory: &PathBuf) -> Result<(), String> {
     if !working_directory.exists() {
-        return Err(format!(
+        return Err(String::from(format!(
             "Expected working directory '{}' does not exist",
             working_directory.to_string_lossy()
-        )
-        .to_string());
+        )));
     }
+
+    let rds_server_cfg_path = working_directory.join("server/instance0/cfg/server.cfg"); // TODO: parameterize RDS instance ID
+    if !rds_server_cfg_path.exists() {
+        return Err(String::from(format!(
+            "Expected RDS instance server config file '{}' does not exist",
+            rds_server_cfg_path.to_string_lossy()
+        )));
+    }
+
+    let rds_users_cfg_path = working_directory.join("server/instance0/cfg/users.cfg"); // TODO: parameterize RDS instance ID
+    if !rds_users_cfg_path.exists() {
+        return Err(String::from(format!(
+            "Expected RDS instance users config file '{}' does not exist",
+            rds_users_cfg_path.to_string_lossy()
+        )));
+    }
+
     return Ok(());
 }
 
@@ -53,7 +69,7 @@ fn install_or_update(working_directory: &PathBuf) {
 fn run_server_blocking(working_directory: &PathBuf, rcon_password: String) {
     let rds_executable_name = "RustDedicated";
     let rds_executable_path = working_directory.join(rds_executable_name); // e.g. "/home/rust/RustDedicated"
-    let rds_instance_id = String::from("instance0");
+    let rds_instance_id = String::from("instance0"); // TODO: parameterize RDS instance ID
     Command::new(
         working_directory,
         rds_executable_path.to_string_lossy().to_string(),
