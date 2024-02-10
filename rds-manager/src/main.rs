@@ -77,9 +77,11 @@ fn check_install_carbonmod(working_directory: &PathBuf, carbon_download_url: Str
 
 /// Install or update _RustDedicated_ using SteamCMD.
 fn install_or_update_rds(working_directory: &PathBuf) {
+    let steamcmd_executable_name = "steamcmd.sh";
+    let steamcmd_executable_path = working_directory.join(steamcmd_executable_name); // e.g. "/home/rust/steamcmd.sh"
     Command::new(
         working_directory,
-        String::from("steamcmd"),
+        steamcmd_executable_path.to_string_lossy().to_string(),
         vec![
             String::from("+force_install_dir"),
             working_directory.to_string_lossy().to_string(),
