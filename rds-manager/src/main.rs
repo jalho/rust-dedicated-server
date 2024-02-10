@@ -49,13 +49,11 @@ fn check_working_dir(working_directory: &PathBuf, rds_instance_id: &String) -> R
 /// Check whether Carbon (modding framework) is installed, and install if not.
 /// It's supposed to be self-updating, so no explicit update step is required
 /// once installed.
-fn check_install_carbonmod(
-    working_directory: &PathBuf,
-    carbon_download_url: String,
-) -> Result<(), String> {
+fn check_install_carbonmod(working_directory: &PathBuf, carbon_download_url: String) {
     let carbon_installation_path = working_directory.join("carbon");
     if carbon_installation_path.exists() {
-        return Ok(());
+        println!("Found presumable Carbon installation at '{}', not reinstalling!", carbon_installation_path.to_string_lossy());
+        return;
     }
     let download_filename = String::from("carbon.tgz");
     Command::new(
@@ -74,7 +72,6 @@ fn check_install_carbonmod(
         vec![String::from("-xzf"), download_filename],
     )
     .execute();
-    return Ok(());
 }
 
 /// Install or update _RustDedicated_ using SteamCMD.
