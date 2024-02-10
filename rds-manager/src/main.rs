@@ -12,8 +12,22 @@ fn main() {
     let rcon_password = String::from("Your_Rcon_Password");
     let working_directory: PathBuf = "/home/rust/".into();
 
+    check_working_dir(&working_directory).unwrap();
     install_or_update(&working_directory);
     run_server_blocking(&working_directory, rcon_password);
+}
+
+/// Check the working directory to exist and to contain required config and data
+/// files.
+fn check_working_dir(working_directory: &PathBuf) -> Result<(), String> {
+    if !working_directory.exists() {
+        return Err(format!(
+            "Expected working directory '{}' does not exist",
+            working_directory.to_string_lossy()
+        )
+        .to_string());
+    }
+    return Ok(());
 }
 
 /// Install or update _RustDedicated_ using SteamCMD.
