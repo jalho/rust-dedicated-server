@@ -39,6 +39,8 @@ fn check_working_dir(working_directory: &PathBuf, rds_instance_id: &String) -> R
         )));
     }
 
+    // TODO: add some sqlite db for collecting stats and check its data file to exist...
+
     return Ok(());
 }
 
