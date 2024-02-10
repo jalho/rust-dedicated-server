@@ -9,11 +9,12 @@ use std::path::PathBuf;
 ///   server updating, server starting, server detected unhealthy etc.
 fn main() {
     let discord_webhook_url = String::from("TODO");
+    let rcon_password = String::from("Your_Rcon_Password");
     let working_directory: PathBuf = "/home/rust/".into();
 
     loop {
         install_or_update(&working_directory);
-        run_server_blocking(&working_directory);
+        run_server_blocking(&working_directory, rcon_password);
         panic!();
     }
 }
@@ -38,7 +39,7 @@ fn install_or_update(working_directory: &PathBuf) {
 }
 
 /// Run _RustDedicated_ executable. Return when the executable finishes.
-fn run_server_blocking(working_directory: &PathBuf) {
+fn run_server_blocking(working_directory: &PathBuf, rcon_password: String) {
     let rds_executable_name = "RustDedicated";
     let rds_executable_path = working_directory.join(rds_executable_name); // e.g. "/home/rust/RustDedicated"
     let rds_instance_id = String::from("instance0");
@@ -54,7 +55,7 @@ fn run_server_blocking(working_directory: &PathBuf) {
             String::from("+rcon.web"),
             String::from("1"),
             String::from("+rcon.password"),
-            String::from("Your_Rcon_Password"), // TODO: parameterize RCON password
+            rcon_password,
         ],
     )
     .execute();
