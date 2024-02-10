@@ -5,9 +5,11 @@ fn main() {
     let rcon_password = String::from("Your_Rcon_Password");
     let working_directory: PathBuf = "/home/rust/".into();
     let rds_instance_id = String::from("instance0");
+    let carbon_download_url = String::from("https://github.com/CarbonCommunity/Carbon/releases/download/production_build/Carbon.Linux.Release.tar.gz");
 
     check_working_dir(&working_directory, &rds_instance_id).unwrap();
-    install_or_update(&working_directory);
+    check_install_carbonmod(&working_directory, carbon_download_url);
+    install_or_update_rds(&working_directory);
     run_server_blocking(&working_directory, rcon_password, rds_instance_id);
 }
 
@@ -44,8 +46,39 @@ fn check_working_dir(working_directory: &PathBuf, rds_instance_id: &String) -> R
     return Ok(());
 }
 
+/// Check whether Carbon (modding framework) is installed, and install if not.
+/// It's supposed to be self-updating, so no explicit update step is required
+/// once installed.
+fn check_install_carbonmod(
+    working_directory: &PathBuf,
+    carbon_download_url: String,
+) -> Result<(), String> {
+    let carbon_installation_path = working_directory.join("carbon");
+    if carbon_installation_path.exists() {
+        return Ok(());
+    }
+    let download_filename = String::from("carbon.tgz");
+    Command::new(
+        working_directory,
+        String::from("wget"),
+        vec![
+            String::from("-O"),
+            download_filename.clone(), // TODO: make this thing accept borrowed instead
+            carbon_download_url,
+        ],
+    )
+    .execute();
+    Command::new(
+        working_directory,
+        String::from("tar"),
+        vec![String::from("-xzf"), download_filename],
+    )
+    .execute();
+    return Ok(());
+}
+
 /// Install or update _RustDedicated_ using SteamCMD.
-fn install_or_update(working_directory: &PathBuf) {
+fn install_or_update_rds(working_directory: &PathBuf) {
     Command::new(
         working_directory,
         String::from("steamcmd"),
@@ -114,7 +147,10 @@ impl<'execution_context> Command<'execution_context> {
         cmd.args(&self.argv);
         match cmd.status() {
             Ok(exit_status) => {
-                println!("'{}' finished with status '{}'", &self.executable_path_name, exit_status);
+                println!(
+                    "'{}' finished with status '{}'",
+                    &self.executable_path_name, exit_status
+                );
             }
             Err(_) => {
                 eprintln!(
