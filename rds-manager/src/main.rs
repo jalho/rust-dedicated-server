@@ -106,17 +106,16 @@ fn run_server_blocking(
     let rds_executable_path = working_directory.join(rds_executable_name); // e.g. "/home/rust/RustDedicated"
     Command::new(
         working_directory,
-        rds_executable_path.to_string_lossy().to_string(),
+        String::from("bash"),
         vec![
-            String::from("-batchmode"),
-            String::from("+server.identity"),
-            rds_instance_id,
-            String::from("+rcon.port"),
-            String::from("28016"),
-            String::from("+rcon.web"),
-            String::from("1"),
-            String::from("+rcon.password"),
-            rcon_password,
+            String::from("-c"),
+            String::from(format!(
+                // load ("source") carbon.sh and then execute RustDedicated with it
+                ". carbon.sh && '{}' -batchmode +server.identity {} +rcon.port 28016 +rcon.web 1 +rcon.password {}",
+                rds_executable_path.to_string_lossy().to_string(),
+                rds_instance_id,
+                rcon_password
+            )),
         ],
     )
     .execute();
