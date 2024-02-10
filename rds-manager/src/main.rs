@@ -1,25 +1,19 @@
 use std::path::PathBuf;
 
-/// Parameters:
-/// - **Absolute path to working directory** from which any rds-manager
-///   operations shall be carried out. This will hopefully make it predictable
-///   where SteamCMD installs its stuff and where RustDedicated emits its
-///   artifacts and whatnot.
-/// - **Discord webhook URL(s)** to notify of rds-manager events such as
-///   server updating, server starting, server detected unhealthy etc.
 fn main() {
-    let discord_webhook_url = String::from("TODO");
+    let discord_webhook_url = String::from("TODO"); // TODO: alert some Discord channel of server updating, starting, etc.
     let rcon_password = String::from("Your_Rcon_Password");
     let working_directory: PathBuf = "/home/rust/".into();
+    let rds_instance_id = String::from("instance0");
 
-    check_working_dir(&working_directory).unwrap();
+    check_working_dir(&working_directory, &rds_instance_id).unwrap();
     install_or_update(&working_directory);
-    run_server_blocking(&working_directory, rcon_password);
+    run_server_blocking(&working_directory, rcon_password, rds_instance_id);
 }
 
 /// Check the working directory to exist and to contain required config and data
 /// files.
-fn check_working_dir(working_directory: &PathBuf) -> Result<(), String> {
+fn check_working_dir(working_directory: &PathBuf, rds_instance_id: &String) -> Result<(), String> {
     if !working_directory.exists() {
         return Err(String::from(format!(
             "Expected working directory '{}' does not exist",
@@ -27,7 +21,8 @@ fn check_working_dir(working_directory: &PathBuf) -> Result<(), String> {
         )));
     }
 
-    let rds_server_cfg_path = working_directory.join("server/instance0/cfg/server.cfg"); // TODO: parameterize RDS instance ID
+    let rds_server_cfg_path =
+        working_directory.join(format!("server/{}/cfg/server.cfg", rds_instance_id));
     if !rds_server_cfg_path.exists() {
         return Err(String::from(format!(
             "Expected RDS instance server config file '{}' does not exist",
@@ -35,7 +30,8 @@ fn check_working_dir(working_directory: &PathBuf) -> Result<(), String> {
         )));
     }
 
-    let rds_users_cfg_path = working_directory.join("server/instance0/cfg/users.cfg"); // TODO: parameterize RDS instance ID
+    let rds_users_cfg_path =
+        working_directory.join(format!("server/{}/cfg/users.cfg", rds_instance_id));
     if !rds_users_cfg_path.exists() {
         return Err(String::from(format!(
             "Expected RDS instance users config file '{}' does not exist",
@@ -66,10 +62,13 @@ fn install_or_update(working_directory: &PathBuf) {
 }
 
 /// Run _RustDedicated_ executable. Return when the executable finishes.
-fn run_server_blocking(working_directory: &PathBuf, rcon_password: String) {
+fn run_server_blocking(
+    working_directory: &PathBuf,
+    rcon_password: String,
+    rds_instance_id: String,
+) {
     let rds_executable_name = "RustDedicated";
     let rds_executable_path = working_directory.join(rds_executable_name); // e.g. "/home/rust/RustDedicated"
-    let rds_instance_id = String::from("instance0"); // TODO: parameterize RDS instance ID
     Command::new(
         working_directory,
         rds_executable_path.to_string_lossy().to_string(),
