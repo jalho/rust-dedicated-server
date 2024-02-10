@@ -39,10 +39,23 @@ fn install_or_update(working_directory: &PathBuf) {
 
 /// Run _RustDedicated_ executable. Return when the executable finishes.
 fn run_server_blocking(working_directory: &PathBuf) {
+    let rds_executable_name = "RustDedicated";
+    let rds_executable_path = working_directory.join(rds_executable_name); // e.g. "/home/rust/RustDedicated"
+    let rds_instance_id = String::from("instance0");
     Command::new(
         working_directory,
-        String::from("echo"),
-        vec![String::from("TODO: Run RustDedicated!")],
+        rds_executable_path.to_string_lossy().to_string(),
+        vec![
+            String::from("-batchmode"),
+            String::from("+server.identity"),
+            rds_instance_id,
+            String::from("+rcon.port"),
+            String::from("28016"),
+            String::from("+rcon.web"),
+            String::from("1"),
+            String::from("+rcon.password"),
+            String::from("Your_Rcon_Password"), // TODO: parameterize RCON password
+        ],
     )
     .execute();
 }
