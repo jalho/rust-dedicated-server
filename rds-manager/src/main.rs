@@ -7,6 +7,7 @@ fn main() {
     let rds_instance_id = String::from("instance0");
     let carbon_download_url = String::from("https://github.com/CarbonCommunity/Carbon/releases/download/production_build/Carbon.Linux.Release.tar.gz");
 
+    println!("RDS-MANAGER START");
     check_working_dir(&working_directory, &rds_instance_id).unwrap();
     check_install_carbonmod(&working_directory, carbon_download_url);
     install_or_update_rds(&working_directory);
