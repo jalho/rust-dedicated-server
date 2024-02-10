@@ -16,7 +16,7 @@ fn main() {
 fn check_working_dir(working_directory: &PathBuf, rds_instance_id: &String) -> Result<(), String> {
     if !working_directory.exists() {
         return Err(String::from(format!(
-            "Expected working directory '{}' does not exist",
+            "Expected working directory '{}' to exist",
             working_directory.to_string_lossy()
         )));
     }
@@ -25,7 +25,7 @@ fn check_working_dir(working_directory: &PathBuf, rds_instance_id: &String) -> R
         working_directory.join(format!("server/{}/cfg/server.cfg", rds_instance_id));
     if !rds_server_cfg_path.exists() {
         return Err(String::from(format!(
-            "Expected RDS instance server config file '{}' does not exist",
+            "Expected RDS instance server config file '{}' to exist",
             rds_server_cfg_path.to_string_lossy()
         )));
     }
@@ -34,7 +34,7 @@ fn check_working_dir(working_directory: &PathBuf, rds_instance_id: &String) -> R
         working_directory.join(format!("server/{}/cfg/users.cfg", rds_instance_id));
     if !rds_users_cfg_path.exists() {
         return Err(String::from(format!(
-            "Expected RDS instance users config file '{}' does not exist",
+            "Expected RDS instance users config file '{}' to exist",
             rds_users_cfg_path.to_string_lossy()
         )));
     }
