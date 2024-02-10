@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::{os::unix::process::CommandExt, path::PathBuf};
 
 fn main() {
     let discord_webhook_url = String::from("TODO"); // TODO: alert some Discord channel of server updating, starting, etc.
@@ -66,13 +66,13 @@ fn check_install_carbonmod(working_directory: &PathBuf, carbon_download_url: Str
             carbon_download_url,
         ],
     )
-    .execute();
+    .fork();
     Command::new(
         working_directory,
         String::from("tar"),
         vec![String::from("-xzf"), download_filename],
     )
-    .execute();
+    .fork();
 }
 
 /// Install or update _RustDedicated_ using SteamCMD.
@@ -93,7 +93,7 @@ fn install_or_update_rds(working_directory: &PathBuf) {
             String::from("+quit"),
         ],
     )
-    .execute();
+    .fork();
 }
 
 /// Run _RustDedicated_ executable. Return when the executable finishes.
@@ -140,7 +140,8 @@ impl<'execution_context> Command<'execution_context> {
         };
     }
 
-    fn execute(&self) {
+    /// Execute as a new child process.
+    fn fork(&self) {
         let mut cmd = std::process::Command::new(&self.executable_path_name);
         cmd.current_dir(&self.working_directory);
         cmd.args(&self.argv);
@@ -160,5 +161,13 @@ impl<'execution_context> Command<'execution_context> {
                 todo!();
             }
         }
+    }
+
+    /// Execute as current process.
+    fn execute(&self) {
+        let mut cmd = std::process::Command::new(&self.executable_path_name);
+        cmd.current_dir(&self.working_directory);
+        cmd.args(&self.argv);
+        cmd.exec();
     }
 }
