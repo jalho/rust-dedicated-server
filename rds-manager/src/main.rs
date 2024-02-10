@@ -12,11 +12,8 @@ fn main() {
     let rcon_password = String::from("Your_Rcon_Password");
     let working_directory: PathBuf = "/home/rust/".into();
 
-    loop {
-        install_or_update(&working_directory);
-        run_server_blocking(&working_directory, rcon_password);
-        panic!();
-    }
+    install_or_update(&working_directory);
+    run_server_blocking(&working_directory, rcon_password);
 }
 
 /// Install or update _RustDedicated_ using SteamCMD.
