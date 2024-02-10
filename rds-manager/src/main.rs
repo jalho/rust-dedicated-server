@@ -113,7 +113,9 @@ impl<'execution_context> Command<'execution_context> {
         cmd.current_dir(&self.working_directory);
         cmd.args(&self.argv);
         match cmd.status() {
-            Ok(_) => {}
+            Ok(exit_status) => {
+                println!("'{}' finished with status '{}'", &self.executable_path_name, exit_status);
+            }
             Err(_) => {
                 eprintln!(
                     "Failed to execute '{}' in '{}'! Is the executable installed? Does the working directory exist?",
