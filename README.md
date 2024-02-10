@@ -1,7 +1,8 @@
 # Usage
 
 1. Provision a Debian VM with at least 16 GB RAM
-2. Install [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD#Debian) on the VM
+2. Install [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD#Debian)
+   on the VM so that its entrypoint is at `home/rust/steamcmd/steamcmd.sh`
 3. Put compiled `rds-manager` to `/home/rust/` in the VM
    - Compiling: `cargo build --release`
    - Moving: `scp target/release/rds-manager rust:/home/rust/`
