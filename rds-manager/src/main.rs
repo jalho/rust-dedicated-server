@@ -1,17 +1,16 @@
-use std::{os::unix::process::CommandExt, path::PathBuf};
+use std::path::PathBuf;
 
 fn main() {
     let discord_webhook_url = String::from("TODO"); // TODO: alert some Discord channel of server updating, starting, etc.
-    let rcon_password = String::from("Your_Rcon_Password");
     let working_directory: PathBuf = "/home/rust/".into();
-    let rds_instance_id = String::from("instance0");
+    let rds_instance_id = String::from("instance0"); // TODO: bind symbol to def in scripts/start-rds.sh somehow
     let carbon_download_url = String::from("https://github.com/CarbonCommunity/Carbon/releases/download/production_build/Carbon.Linux.Release.tar.gz");
 
     println!("RDS-MANAGER START");
     check_working_dir(&working_directory, &rds_instance_id).unwrap();
     check_install_carbonmod(&working_directory, carbon_download_url);
     install_or_update_rds(&working_directory);
-    run_server_blocking(&working_directory, rcon_password, rds_instance_id);
+    run_server_blocking(&working_directory);
 }
 
 /// Check the working directory to exist and to contain required config and data
@@ -53,7 +52,10 @@ fn check_working_dir(working_directory: &PathBuf, rds_instance_id: &String) -> R
 fn check_install_carbonmod(working_directory: &PathBuf, carbon_download_url: String) {
     let carbon_installation_path = working_directory.join("carbon");
     if carbon_installation_path.exists() {
-        println!("Found presumable Carbon installation at '{}', not reinstalling!", carbon_installation_path.to_string_lossy());
+        println!(
+            "Found presumable Carbon installation at '{}', not reinstalling!",
+            carbon_installation_path.to_string_lossy()
+        );
         return;
     }
     let download_filename = String::from("carbon.tgz");
@@ -97,26 +99,16 @@ fn install_or_update_rds(working_directory: &PathBuf) {
 }
 
 /// Run _RustDedicated_ executable. Return when the executable finishes.
-fn run_server_blocking(
-    working_directory: &PathBuf,
-    rcon_password: String,
-    rds_instance_id: String,
-) {
-    let rds_executable_name = "RustDedicated";
-    let rds_executable_path = working_directory.join(rds_executable_name); // e.g. "/home/rust/RustDedicated"
+fn run_server_blocking(working_directory: &PathBuf) {
+    let scripts_dir_name = "scripts";
+    let rds_start_script_name = "start-rds.sh";
+    let entry_point_name = working_directory
+        .join(scripts_dir_name)
+        .join(rds_start_script_name); // e.g. "/home/rust/scripts/start-rds.sh"
     Command::new(
         working_directory,
         String::from("bash"),
-        vec![
-            String::from("-c"),
-            String::from(format!(
-                // load ("source") carbon.sh and then execute RustDedicated with it
-                ". carbon.sh && '{}' -batchmode +server.identity {} +rcon.port 28016 +rcon.web 1 +rcon.password {}",
-                rds_executable_path.to_string_lossy().to_string(),
-                rds_instance_id,
-                rcon_password
-            )),
-        ],
+        vec![entry_point_name.to_string_lossy().to_string()],
     )
     .execute();
 }
@@ -168,6 +160,6 @@ impl<'execution_context> Command<'execution_context> {
         let mut cmd = std::process::Command::new(&self.executable_path_name);
         cmd.current_dir(&self.working_directory);
         cmd.args(&self.argv);
-        cmd.exec();
+        std::os::unix::process::CommandExt::exec(&mut cmd);
     }
 }
