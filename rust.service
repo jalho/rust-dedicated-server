@@ -5,7 +5,6 @@ After=network.target
 [Service]
 ExecStart=/home/rust/rds-manager
 Restart=always
-KillMode=process
 User=rust
 Group=rust
 WorkingDirectory=/home/rust

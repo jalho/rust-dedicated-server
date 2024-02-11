@@ -102,15 +102,25 @@ fn install_or_update_rds(working_directory: &PathBuf) {
 
 /// Run _RustDedicated_ executable. Return when the executable finishes.
 fn run_server_blocking(working_directory: &PathBuf) {
-    let scripts_dir_name = "scripts";
-    let rds_start_script_name = "start-rds.sh";
-    let entry_point_name = working_directory
-        .join(scripts_dir_name)
-        .join(rds_start_script_name); // e.g. "/home/rust/scripts/start-rds.sh"
+    // TODO: load Carbon (modding framework) somehow...
+    let rds_executable_name = String::from("RustDedicated");
     Command::new(
         working_directory,
-        String::from("bash"),
-        vec![entry_point_name.to_string_lossy().to_string()],
+        working_directory
+            .join(rds_executable_name)
+            .to_string_lossy()
+            .to_string(),
+        vec![
+            String::from("-batchmode"),
+            String::from("+server.identity"),
+            String::from("instance0"), // TODO: parameterize
+            String::from("+rcon.port"),
+            String::from("28016"), // TODO: parameterize
+            String::from("+rcon.web"),
+            String::from("1"),
+            String::from("+rcon.password"),
+            String::from("Your_Rcon_Password"), // TODO: parameterize
+        ],
     )
     .execute();
 }
