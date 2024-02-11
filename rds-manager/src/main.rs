@@ -9,7 +9,9 @@ fn main() {
     println!("RDS-MANAGER START");
     check_working_dir(&working_directory, &rds_instance_id).unwrap();
     check_install_carbonmod(&working_directory, carbon_download_url);
+    println!("STEAMCMD START");
     install_or_update_rds(&working_directory);
+    println!("RDS START");
     run_server_blocking(&working_directory);
 }
 
@@ -113,6 +115,7 @@ fn run_server_blocking(working_directory: &PathBuf) {
     .execute();
 }
 
+#[derive(Debug)]
 struct Command<'execution_context> {
     executable_path_name: String,
     working_directory: &'execution_context PathBuf,
@@ -137,6 +140,7 @@ impl<'execution_context> Command<'execution_context> {
         let mut cmd = std::process::Command::new(&self.executable_path_name);
         cmd.current_dir(&self.working_directory);
         cmd.args(&self.argv);
+        println!("{:?}", self);
         match cmd.status() {
             Ok(exit_status) => {
                 println!(
@@ -160,6 +164,7 @@ impl<'execution_context> Command<'execution_context> {
         let mut cmd = std::process::Command::new(&self.executable_path_name);
         cmd.current_dir(&self.working_directory);
         cmd.args(&self.argv);
+        println!("{:?}", self);
         std::os::unix::process::CommandExt::exec(&mut cmd);
     }
 }

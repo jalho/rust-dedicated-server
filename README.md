@@ -19,7 +19,9 @@
    - `systemctl enable rust`
    - `systemctl start rust`
 
-## Tips
+## TODO
 
-- Observe the logs of the systemd managed `rds-manager`: `journalctl -fu rust`
-- Kill RustDedicated process `kill $(pgrep RustDedicated)`
+- [ ] This setup does not use the specified RDS instance ID ("instance0") for
+      some reason, but the RDS default "my_server_identity" (with seed 1337)
+      instead. Also the log file specified at `scripts/start-rds.sh` does not
+      appear. Figure out why!
