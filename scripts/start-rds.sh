@@ -9,4 +9,4 @@ set -xe
 
 source /home/rust/carbon.sh
 
-/home/rust/RustDedicated -batchmode -logfile "$RDS_LOGFILE" +server.identity "$RDS_INSTANCE_ID" +rcon.port 28016 +rcon.web 1 +rcon.password "$RCON_PASSWORD"
+/home/rust/RustDedicated "-batchmode -logfile \"$RDS_LOGFILE\" +server.identity \"$RDS_INSTANCE_ID\" +rcon.port $RCON_PORT +rcon.web 1 +rcon.password \"$RCON_PASSWORD\""
