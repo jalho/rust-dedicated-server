@@ -3,11 +3,10 @@ Description=Rust
 After=network.target
 
 [Service]
-ExecStart=/home/rust/rds-manager
+WorkingDirectory=/home/rust
+ExecStart=/home/rust/run-with-carbon.sh
 Restart=always
 User=rust
-Group=rust
-WorkingDirectory=/home/rust
 
 [Install]
 WantedBy=default.target
