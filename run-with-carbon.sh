@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cd /home/rust/
 /home/rust/steamcmd/steamcmd.sh +force_install_dir /home/rust/ +login anonymous +app_update 258550 validate +quit
 source /home/rust/carbon/tools/environment.sh
