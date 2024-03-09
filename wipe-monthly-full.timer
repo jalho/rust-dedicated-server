@@ -1,0 +1,9 @@
+[Unit]
+Description=Monthly full wipe
+
+[Timer]
+OnCalendar=Thu < 5 *-*-01..07 18:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

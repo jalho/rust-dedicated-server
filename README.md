@@ -43,4 +43,20 @@
    systemctl start rust
    ```
 
-8. Now you should have systemd running RustDedicated.
+8. Start scheduled wipe services.
+
+   ```
+   systemctl enable wipe-weekly-map-only.timer
+   systemctl start wipe-weekly-map-only.timer
+   systemctl enable wipe-weekly-map-only.service
+   systemctl start wipe-weekly-map-only.service
+   ```
+
+   ```
+   systemctl enable wipe-monthly-full.timer
+   systemctl start wipe-monthly-full.timer
+   systemctl enable wipe-monthly-full.service
+   systemctl start wipe-monthly-full.service
+   ```
+
+9. Now you should have systemd running RustDedicated.

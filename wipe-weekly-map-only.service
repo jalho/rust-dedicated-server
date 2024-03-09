@@ -1,0 +1,6 @@
+[Unit]
+Description=Weekly map wipe
+
+[Service]
+Type=oneshot
+ExecStart=/home/rust/wipe-weekly-map-only.sh

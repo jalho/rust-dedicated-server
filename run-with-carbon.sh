@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -xe
 
 cd /home/rust/
 /home/rust/steamcmd/steamcmd.sh +force_install_dir /home/rust/ +login anonymous +app_update 258550 validate +quit
