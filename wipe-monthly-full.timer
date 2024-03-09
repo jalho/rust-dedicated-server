@@ -2,7 +2,7 @@
 Description=Monthly full wipe
 
 [Timer]
-OnCalendar=Thu < 5 *-*-01..07 18:00:00
+OnCalendar=Thu 18:00:00
 Persistent=true
 
 [Install]

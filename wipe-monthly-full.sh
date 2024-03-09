@@ -17,6 +17,15 @@ files_to_remove=(
     "$INSTANCE_DATA_DIR/sv.files*"
 )
 
+day_of_week=$(date +%u) # 4 = Thursday, 5 = Friday
+day_of_month=$(date +%d)
+
+if [ $day_of_week -ne 4 ] || [ $day_of_month -gt 7 ]; then
+    set +x
+    echo "Not doing full wipe -- It's not Thursday or it's not the 1st Thursday of the month!"
+    exit 0
+fi
+
 systemctl stop rust
 
 for index in "${!files_to_remove[@]}"; do
