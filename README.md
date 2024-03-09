@@ -3,7 +3,9 @@
 1. Provision a Debian VM with at least 16 GB RAM.
 
 2. Install [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD#Manually)
-   on the VM so that its entrypoint is at `/home/rust/steamcmd/steamcmd.sh`.
+   on the VM so that its entrypoint is at `/home/rust/steamcmd/steamcmd.sh`. The
+   entry point needs to be different of where RustDedicated will be installed
+   (that being `/home/rust/`)!
 
    ```
    mkdir -p /home/rust/steamcmd
@@ -29,14 +31,14 @@
 5. Put the RDS running script [`run-with-carbon.sh`](./run-with-carbon.sh) from
    this repository to `/home/rust/` in the VM. It will be run by systemd.
 
-6. Put the systemd unit file [`rust.service`](./rust.service) from this
-   repository to `/etc/systemd/system/rust.service` in the VM. Reload systemd.
+6. Put the systemd unit files (`*.service`, `*.timer`) from this repository to
+   `/etc/systemd/system/` in the VM. Reload systemd.
 
    ```
    systemctl daemon-reload
    ```
 
-7. Start the systemd managed service.
+7. Start the systemd managed Rust game server service.
 
    ```
    systemctl enable rust
