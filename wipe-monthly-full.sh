@@ -28,6 +28,11 @@ fi
 
 systemctl stop rust
 
+old_seed=$(grep "server.seed" $INSTANCE_CONFIG_FILE)
+new_seed=$RANDOM
+sed -i "s/server.seed .*/server.seed $new_seed/" $INSTANCE_CONFIG_FILE
+echo "server.seed has been updated from '$old_seed' to '$new_seed'"
+
 for index in "${!files_to_remove[@]}"; do
     rm ${files_to_remove[$index]} || true
 done

@@ -3,6 +3,7 @@
 set -xe
 
 INSTANCE_DATA_DIR="/home/rust/server/instance0"
+INSTANCE_CONFIG_FILE="$INSTANCE_DATA_DIR/cfg/server.cfg"
 
 files_to_remove=(
     "$INSTANCE_DATA_DIR/Log.EAC.txt"
@@ -34,6 +35,11 @@ if [ $day_of_week -eq 5 ] && [ $day_of_month -le 7 ] && [ $day_of_month -ge 2 ];
 fi
 
 systemctl stop rust
+
+old_seed=$(grep "server.seed" $INSTANCE_CONFIG_FILE)
+new_seed=$RANDOM
+sed -i "s/server.seed .*/server.seed $new_seed/" $INSTANCE_CONFIG_FILE
+echo "server.seed has been updated from '$old_seed' to '$new_seed'"
 
 for index in "${!files_to_remove[@]}"; do
     rm ${files_to_remove[$index]} || true
