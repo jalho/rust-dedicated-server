@@ -87,7 +87,13 @@
      JSON format. It goes to e.g.:
 
      ```
-     C:\Program Files (x86)\Steam\steamapps\common\FORTIFY\Fortify_Data\Saves\farm.json
+     "C:\Program Files (x86)\Steam\steamapps\common\FORTIFY\Fortify_Data\Saves\farm.json"
+     ```
+
+     or as WSL path:
+
+     ```
+     "mnt/c/Program Files (x86)/Steam/steamapps/common/FORTIFY/Fortify_Data/Saves/farm.json"
      ```
 
   3. Move the JSON asset to the Rust server's plugins' data dir. For example:
