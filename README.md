@@ -62,3 +62,19 @@
    ```
 
 9. Now you should have systemd running RustDedicated.
+
+# Plugin cheatsheet
+
+## [_Copy Paste_ by misticos](https://umod.org/plugins/copy-paste)
+
+- Chat command assuming `farm.json` in the plugin's data dir:
+
+  ```
+  /paste farm auth true stability false
+  ```
+
+- Chat command -- copy as `some-base.json`:
+
+  ```
+  /copy some-base radius 3 method building
+  ```
