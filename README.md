@@ -78,3 +78,22 @@
   ```
   /copy some-base radius 3 method building
   ```
+
+- Getting bases from Steam Workshop:
+
+  1. _Subscribe_ to some asset in the Steam Workshop for _Fortify_.
+
+  2. Open the asset in Fortify. Save it as new file in _Copy Paste_ compatible
+     JSON format. It goes to e.g.:
+
+     ```
+     C:\Program Files (x86)\Steam\steamapps\common\FORTIFY\Fortify_Data\Saves\farm.json
+     ```
+
+  3. Move the JSON asset to the Rust server's plugins' data dir. For example:
+
+     ```
+     ./carbon/data/copypaste/farm.json
+     ```
+
+  4. Paste in-game using the plugin's chat commands.
