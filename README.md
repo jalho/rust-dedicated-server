@@ -103,3 +103,8 @@
      ```
 
   4. Paste in-game using the plugin's chat commands.
+
+## [_Skins_ by misticos](https://umod.org/plugins/skins)
+
+- Useful config: https://gist.github.com/TheDevMinerTV/6d17e87daad727789c152c3544e44b45
+
