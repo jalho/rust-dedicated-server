@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -e
 
 INSTANCE_DATA_DIR="/home/rust/server/instance0"
 INSTANCE_CONFIG_FILE="$INSTANCE_DATA_DIR/cfg/server.cfg"
@@ -28,20 +28,25 @@ day_of_month=$(date +%d)
 #       $day_of_month -le 7  -->  "it's the 1st Friday of the month"
 #       $day_of_month -ge 2  -->  "Friday wasn't the first day of the month"
 #
-if [ $day_of_week -eq 5 ] && [ $day_of_month -le 7 ] && [ $day_of_month -ge 2 ]; then
-    set +x
-    echo "Assuming it was full wipe yesteday -- Not wiping today!"
-    exit 0
-fi
+#if [ $day_of_week -eq 5 ] && [ $day_of_month -le 7 ] && [ $day_of_month -ge 2 ]; then
+#    echo "Assuming it was full wipe yesteday -- Not wiping today!"
+#    exit 0
+#fi
 
 systemctl stop rust
 
 old_seed=$(grep "server.seed" $INSTANCE_CONFIG_FILE)
-new_seed=$RANDOM
+#new_seed=$RANDOM
+new_seed=1359905311
+echo "Changing seed from '$old_seed' to '$new_seed'"
 sed -i "s/server.seed .*/server.seed $new_seed/" $INSTANCE_CONFIG_FILE
-echo "server.seed has been updated from '$old_seed' to '$new_seed'"
+
+WORLD_SIZE=3500
+echo "Setting world size to $WORLD_SIZE"
+sed -i "s/server.worldsize .*/server.worldsize $WORLD_SIZE/" $INSTANCE_CONFIG_FILE
 
 for index in "${!files_to_remove[@]}"; do
+    echo "Removing ${files_to_remove[$index]}"
     rm ${files_to_remove[$index]} || true
 done
 
