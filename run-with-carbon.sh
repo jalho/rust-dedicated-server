@@ -15,7 +15,7 @@ source /home/rust/carbon/tools/environment.sh
 
 json_payload='{"content":"Starting server... This usually takes around 20-30 minutes..."}'
 curl -X POST -H "Content-Type: application/json" -d "$json_payload" "$webhook_url"
-/home/rust/RustDedicated -batchmode -logfile rds.log +server.identity instance0 +rcon.port 28016 +rcon.web 1 +rcon.password Your_Rcon_Password
+/home/rust/RustDedicated -batchmode +server.identity instance0 +rcon.port 28016 +rcon.web 1 +rcon.password Your_Rcon_Password
 
 # There will be no alert to Discord from this script about the server being
 # ready because the process is handed over to RustDedicated!
