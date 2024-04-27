@@ -1,0 +1,12 @@
+[Unit]
+Description=Rust
+After=network.target
+
+[Service]
+WorkingDirectory=/home/rust
+ExecStart=/home/rust/rds-stats-sink
+Restart=always
+User=rust
+
+[Install]
+WantedBy=default.target
