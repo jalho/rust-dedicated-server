@@ -5,6 +5,7 @@ After=network.target
 [Service]
 WorkingDirectory=/home/rust
 ExecStart=/home/rust/rds-stats-sink --alert-cargoship "https://discord.com/api/webhooks/0000000000000000000/00aaaaaaa0aaaaa0a0aaaaa0aaa0aa-a_aaaa0aa0aaaa-aaa0_0aaaaaaaaaaaaaaaa"
+Environment="REINDEERLAND_WS_EXPECTED_ORIGIN=http://65.109.226.175"
 Restart=always
 User=rust
 
