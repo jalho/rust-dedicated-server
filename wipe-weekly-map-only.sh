@@ -36,8 +36,8 @@ day_of_month=$(date +%d)
 systemctl stop rust
 
 old_seed=$(grep "server.seed" $INSTANCE_CONFIG_FILE)
-#new_seed=$RANDOM
-new_seed=1359905311
+new_seed=$RANDOM
+#new_seed=1359905311
 echo "Changing seed from '$old_seed' to '$new_seed'"
 sed -i "s/server.seed .*/server.seed $new_seed/" $INSTANCE_CONFIG_FILE
 
@@ -51,3 +51,4 @@ for index in "${!files_to_remove[@]}"; do
 done
 
 systemctl start rust
+systemctl restart rds-stats-sink.service
