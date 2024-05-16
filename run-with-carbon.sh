@@ -10,9 +10,12 @@ cd /home/rust/
 json_payload='{"content":"Going to start the server... First checking for updates!"}'
 curl -X POST -H "Content-Type: application/json" -d "$json_payload" "$webhook_url"
 
+cp carbon/config.json carbon-config-backup.json
 rm Carbon.Linux.Release.tar.gz || true
 wget $DOWNLOAD_CARBONMOD
 tar -xzf Carbon.Linux.Release.tar.gz
+rm carbon/config.json
+cp carbon-config-backup.json carbon/config.json
 
 /home/rust/steamcmd/steamcmd.sh +force_install_dir /home/rust/ +login anonymous +app_update 258550 validate +quit
 
