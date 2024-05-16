@@ -10,6 +10,7 @@ cd /home/rust/
 json_payload='{"content":"Going to start the server... First checking for updates!"}'
 curl -X POST -H "Content-Type: application/json" -d "$json_payload" "$webhook_url"
 
+rm Carbon.Linux.Release.tar.gz || true
 wget $DOWNLOAD_CARBONMOD
 tar -xzf Carbon.Linux.Release.tar.gz
 
