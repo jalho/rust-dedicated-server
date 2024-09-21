@@ -45,8 +45,9 @@ docker run --rm -d \
   --name $INSTALLER_CONTAINER \
   -v $MANAGED_DATA_VOL:/docker-managed-steamcmd-vol \
   $INSTALLER_IMAGE \
- +force_install_dir /docker-managed-steamcmd-vol +login anonymous +app_update 258550 validate +quit
-docker wait $INSTALLER_CONTAINER
+ +force_install_dir /docker-managed-steamcmd-vol +login anonymous +app_update 258550 validate +quit \
+ 1>/dev/null
+docker wait $INSTALLER_CONTAINER 1>/dev/null
 set +e
 echo "Installed!"
 
@@ -57,7 +58,8 @@ docker run --rm -d \
   -v $MANAGED_DATA_VOL:/steamcmd-installations \
   -e LD_LIBRARY_PATH="/steamcmd-installations/RustDedicated_Data/Plugins/x86_64" \
   $GAMESERVER_IMAGE \
-  /bin/sh -c "cd /steamcmd-installations && ./RustDedicated -batchmode +server.identity instance0 +rcon.port 28016 +rcon.web 1 +rcon.password instance0 +server.worldsize 1000"
+  /bin/sh -c "cd /steamcmd-installations && ./RustDedicated -batchmode +server.identity instance0 +rcon.port 28016 +rcon.web 1 +rcon.password instance0 +server.worldsize 1000" \
+  1>/dev/null
 set +e
 echo "Started!"
 
