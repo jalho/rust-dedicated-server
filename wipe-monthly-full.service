@@ -1,9 +1,0 @@
-[Unit]
-Description=Monthly full wipe
-
-[Service]
-Type=oneshot
-ExecStart=/home/rust/wipe-monthly-full.sh
-
-[Install]
-WantedBy=multi-user.target
