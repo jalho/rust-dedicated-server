@@ -39,19 +39,24 @@ else
   echo "Exists!"
 fi
 
-echo -n "INFO: Installing or updating RustDedicated game server in the managed volume '$MANAGED_DATA_VOL'... "
+echo -n "INFO: Installing game server in managed volume '$MANAGED_DATA_VOL' using container '$INSTALLER_CONTAINER'... "
 set -e
-docker run --rm \
+docker run --rm -d \
   --name $INSTALLER_CONTAINER \
   -v $MANAGED_DATA_VOL:/docker-managed-steamcmd-vol \
   $INSTALLER_IMAGE \
  +force_install_dir /docker-managed-steamcmd-vol +login anonymous +app_update 258550 validate +quit
+docker wait $INSTALLER_CONTAINER
 set +e
-echo "Done!"
+echo "Installed!"
 
-docker run --rm \
+echo -n "INFO: Starting game server in detached container '$GAMESERVER_CONTAINER'... "
+set -e
+docker run --rm -d \
   --name $GAMESERVER_CONTAINER \
   -v $MANAGED_DATA_VOL:/steamcmd-installations \
   -e LD_LIBRARY_PATH="/steamcmd-installations/RustDedicated_Data/Plugins/x86_64" \
   $GAMESERVER_IMAGE \
   /bin/sh -c "cd /steamcmd-installations && ./RustDedicated -batchmode +server.identity instance0 +rcon.port 28016 +rcon.web 1 +rcon.password instance0 +server.worldsize 1000"
+set +e
+echo "Started!"
