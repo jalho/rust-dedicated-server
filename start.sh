@@ -39,7 +39,7 @@ else
   echo "Exists!"
 fi
 
-echo -n "INFO: Installing game server in managed volume '$MANAGED_DATA_VOL' using container '$INSTALLER_CONTAINER'... "
+echo -n "INFO: Installing or updating game server in managed volume '$MANAGED_DATA_VOL' using container '$INSTALLER_CONTAINER'... "
 set -e
 docker run --rm -d \
   --name $INSTALLER_CONTAINER \
@@ -60,3 +60,6 @@ docker run --rm -d \
   /bin/sh -c "cd /steamcmd-installations && ./RustDedicated -batchmode +server.identity instance0 +rcon.port 28016 +rcon.web 1 +rcon.password instance0 +server.worldsize 1000"
 set +e
 echo "Started!"
+
+echo "INFO: Following game server logs!"
+docker container logs -f $GAMESERVER_CONTAINER
