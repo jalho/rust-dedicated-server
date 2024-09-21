@@ -19,10 +19,12 @@
 
 MANAGED_DATA_VOL="steamcmd-data"
 
-INSTALLER_IMAGE="steamcmd/steamcmd:debian-12@sha256:4f82cc9dc0a7beadbbc7dc289811ead83a93e22c249c07509418bb7151ec361f"
+# initially tested with sha256:4f82cc9dc0a7beadbbc7dc289811ead83a93e22c249c07509418bb7151ec361f
+INSTALLER_IMAGE="steamcmd/steamcmd:debian-12"
 INSTALLER_CONTAINER="installer"
 
-GAMESERVER_IMAGE="debian:12.7@sha256:b8084b1a576c5504a031936e1132574f4ce1d6cc7130bbcc25a28f074539ae6b"
+# initially tested with sha256:b8084b1a576c5504a031936e1132574f4ce1d6cc7130bbcc25a28f074539ae6b
+GAMESERVER_IMAGE="debian:12.7"
 GAMESERVER_CONTAINER="gameserver"
 
 echo -n "INFO: Checking if Docker managed volume '$MANAGED_DATA_VOL' exists... "
