@@ -2,12 +2,19 @@
 
 #
 #  WHAT DO?
-# 
+#
 #   0. Using SteamCMD (as packaged by https://github.com/steamcmd/docker)...
 #
 #   1. Install or verify installation of RustDedicated (game server)
 #
 #   2. Install or update Carbon (modding framework)
+#
+#
+#  TESTED ON 2024-09-21 ON:
+#
+#   Debian GNU/Linux 12 (bookworm)
+#   kernel release 6.1.0-23-amd64
+#   Docker version 27.2.0, build 3ab4256
 #
 
 MANAGED_DATA_VOL="steamcmd-data"
