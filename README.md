@@ -1,3 +1,7 @@
+This project has reached the _abandoned_ stage. It is no longer maintained.
+
+---
+
 # Usage
 
 1. Provision a Debian VM with at least 16 GB RAM.
